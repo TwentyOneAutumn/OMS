@@ -5,20 +5,14 @@
 <link rel="apple-touch-icon" sizes="76x76" href="/static/assets/img/favicon.ico">
 <link rel="icon" type="image/png" href="/static/assets/img/favicon.ico">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>Anchor Bootstrap 4.1.3 UI Kit by WowThemesNet</title>
+<title>Login</title>
 <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport'/>
-    
-<!-- Google Font -->
-<link href="https://fonts.googleapis.com/css?family=Nunito:300,300i,400,600,800" rel="stylesheet">
-    
-<!-- Font Awesome Icons -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    
+
 <!-- Main CSS -->
 <link href="/static/assets/css/main.css" rel="stylesheet"/>
     
 <!-- Animation CSS -->
-<link href="/static/assets/css/vendor/aos.css" rel="stylesheet" src="/"/>
+<link href="/static/assets/css/vendor/aos.css" rel="stylesheet"/>
 
 </head>
     
@@ -26,7 +20,7 @@
     
 
 <!-- Main -->
-<div class="d-md-flex h-md-100 align-items-center">
+<div class="d-md-flex h-md-100 align-items-center" id="app">
 	<div class="col-md-6 p-0 bg-indigo h-md-100">
 		<div class="text-white d-md-flex align-items-center h-100 p-5 text-center justify-content-center">
 			<div class="logoarea pt-5 pb-5">
@@ -34,7 +28,6 @@
 					<i class="fa fa-anchor fa-3x"></i>
 				</p>
 				<h1 class="mb-0 mt-3 display-4">图书销售系统</h1>
-				</a>
 			</div>
 		</div>
 	</div>
@@ -43,7 +36,7 @@
 			<form class="border rounded p-5">
 				<h3 class="mb-4 text-center">Sign In</h3>
 				<div class="form-group">
-					<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Login ID" required="">
+					<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Login ID" oninput = "value=value.replace(/[^\d]/g,'')" required="">
 				</div>
 				<div class="form-group">
 					<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required="">
@@ -53,7 +46,7 @@
 			</form>
 		</div>
 	</div>
-</div>
+</div >
 <!-- End Main -->
     
 
@@ -66,7 +59,8 @@ JAVASCRIPTS
 <script src="/static/assets/js/vendor/popper.min.js" type="text/javascript"></script>
 <script src="/static/assets/js/vendor/bootstrap.min.js" type="text/javascript"></script>
 <script src="/static/assets/js/functions.js" type="text/javascript"></script>
-    
+<script src="/static/assets/js/functions.js" type="text/javascript"></script>
+<script src="/static/vue/vue.js"></script>
 <!-- Animation -->
 <script src="/static/assets/js/vendor/aos.js" type="text/javascript"></script>
 <noscript>
@@ -92,6 +86,16 @@ AOS.init({
     return window.innerWidth < maxWidth;
   }
 });
+</script>
+
+<!-- Vue -->
+<script>
+	var app = new Vue({
+		el: '#app',
+		data: {
+			message : ''
+		}
+	})
 </script>
 
 </body>
