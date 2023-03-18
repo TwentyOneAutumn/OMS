@@ -1,6 +1,16 @@
 server:
   port: 8801
 spring:
+  thymeleaf:
+    cache: true
+    check-template: true
+    check-template-location: true
+    content-type: text/html
+    enabled: true
+    encoding: UTF-8
+    mode: HTML5
+    prefix: classpath:/templates/
+    suffix: .html
   datasource:
     driver-class-name: ${jdbc.driver}
     url: ${jdbc.url}
