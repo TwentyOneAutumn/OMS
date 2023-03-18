@@ -1,30 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
 <meta charset="utf-8"/>
-<link rel="apple-touch-icon" sizes="76x76" href="/static/assets/img/favicon.ico">
-<link rel="icon" type="image/png" href="/static/assets/img/favicon.ico">
+<link rel="apple-touch-icon" sizes="76x76" th:href="/assets/img/favicon.ico">
+<link rel="icon" type="image/png" th:href="/assets/img/favicon.ico">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>Anchor Bootstrap 4.1.3 UI Kit by WowThemesNet</title>
 <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport'/>
-    
-<!-- Google Font -->
-<link href="https://fonts.googleapis.com/css?family=Nunito:300,300i,400,600,800" rel="stylesheet">
-    
-<!-- Font Awesome Icons -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    
+
 <!-- Main CSS -->
-<link href="/static/assets/css/main.css" rel="stylesheet"/>
-    
+<link th:href="/assets/css/main.css" rel="stylesheet"/>
+
 <!-- Animation CSS -->
-<link href="/static/assets/css/vendor/aos.css" rel="stylesheet"/>
-    
+<link th:href="/assets/css/vendor/aos.css" rel="stylesheet"/>
+
 </head>
-    
-<body> 
-    
-    
+
+<body>
+
+
 <!--------------------------------------
 NAVBAR
 --------------------------------------->
@@ -65,8 +59,8 @@ NAVBAR
 </div>
 </nav>
 <!-- End Navbar -->
-    
-    
+
+
 <!-------------------------------------
 HEADER
 --------------------------------------->
@@ -88,8 +82,8 @@ HEADER
 <path class="bg-primary" d="M685.6,38.8C418.7-11.1,170.2,9.9,0,30v96h1440V30C1252.7,52.2,1010,99.4,685.6,38.8z"/>
 </svg>
 <!--- END HEADER -->
-    
-    
+
+
 <!--------------------------------------
 FEATURES
 --------------------------------------->
@@ -176,8 +170,8 @@ FEATURES
 	</div>
 </div>
 <!-- End Features -->
-    
-  
+
+
 <!--------------------------------------
 SCREENSHOT
 --------------------------------------->
@@ -191,8 +185,8 @@ SCREENSHOT
 </div>
 </section>
 <!-- End Screenshot -->
-    
-    
+
+
 <!--------------------------------------
 PRICING
 --------------------------------------->
@@ -252,8 +246,8 @@ PRICING
 	</div>
 </div>
 <!-- End Pricing -->
-    
-    
+
+
 <!--------------------------------------
 FAQ
 --------------------------------------->
@@ -292,8 +286,8 @@ FAQ
 	</div>
 </div>
 <!-- End FAQ -->
-    
-    
+
+
 <!--------------------------------------
 CTA
 --------------------------------------->
@@ -317,8 +311,8 @@ CTA
 	</form>
 </div>
 <!-- End CTA -->
-   
-    
+
+
 <!------------------------------------------
 DEMO MODAL & DONATE BUTTON ONLY - DON'T COPY
 ------------------------------------------->
@@ -394,7 +388,7 @@ DEMO MODAL & DONATE BUTTON ONLY - DON'T COPY
 END DEMO MODAL & DONATE BUTTON
 --------------------------------------->
 
-    
+
 <!--------------------------------------
 FOOTER
 --------------------------------------->
@@ -456,13 +450,14 @@ FOOTER
 <!--------------------------------------
 JAVASCRIPTS
 --------------------------------------->    
-<script src="/static/assets/js/vendor/jquery.min.js" type="text/javascript"></script>
-<script src="/static/assets/js/vendor/popper.min.js" type="text/javascript"></script>
-<script src="/static/assets/js/vendor/bootstrap.min.js" type="text/javascript"></script>
-<script src="/static/assets/js/functions.js" type="text/javascript"></script>
-    
-<!-- Animation -->
-<script src="/static/assets/js/vendor/aos.js" type="text/javascript"></script>
+<script th:src="/assets/js/vendor/jquery.min.js" type="text/javascript"></script>
+<script th:src="/assets/js/vendor/popper.min.js" type="text/javascript"></script>
+<script th:src="/assets/js/vendor/bootstrap.min.js" type="text/javascript"></script>
+<script th:src="/assets/js/functions.js" type="text/javascript"></script>
+<script th:src="/assets/js/vendor/aos.js" type="text/javascript"></script>
+
+
+
 <noscript>
     <style>
         *[data-aos] {
