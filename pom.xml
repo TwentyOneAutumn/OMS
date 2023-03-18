@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.3</version>
+        <version>2.6.11</version>
         <relativePath/>
     </parent>
 
@@ -34,11 +34,15 @@
     </properties>
 
     <dependencies>
+        <!-- Thymeleaf模板引擎 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
         <!-- springBoot父依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-dependencies</artifactId>
-            <version>${SpringBoot.version}</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -46,19 +50,16 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>${SpringBoot.version}</version>
         </dependency>
         <!-- SpringBoot集成MyBatisPlus -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${MybatisPlus.version}</version>
         </dependency>
         <!--  MySQL数据库依赖  -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>${Mysql.version}</version>
             <scope>runtime</scope>
         </dependency>
 

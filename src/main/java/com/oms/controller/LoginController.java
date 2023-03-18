@@ -14,6 +14,6 @@ public class LoginController {
 
     @GetMapping("/toLogin")
     public String toLogin(){
-        return "login.html";
+        return "login";
     }
 }
