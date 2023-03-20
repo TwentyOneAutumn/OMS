@@ -22,6 +22,10 @@ html {
 @-ms-viewport {
   width: device-width; }
 
+.btn-group.btn-group-toggle {
+  margin-top: 23px;
+}
+
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block; }
 

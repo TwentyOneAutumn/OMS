@@ -1,15 +1,20 @@
 package com.oms.controller;
 
-import org.springframework.stereotype.Controller;
+import com.oms.domain.AjaxResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/login")
 public class LoginController {
 
-    @GetMapping("/toLogin")
-    public String toLogin(){
-        return "login";
+    /**
+     * 验证登录
+     * @return 状态
+     */
+    @GetMapping("/check")
+    public AjaxResult toCheck(){
+        return AjaxResult.success();
     }
 }
