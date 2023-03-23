@@ -1,8 +1,13 @@
 package com.oms.controller;
 
+import com.oms.domain.dto.TokenCheckDto;
+import com.oms.service.ISysUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
 
 /**
  * 页面跳转
@@ -10,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/page")
 public class PageCotroller {
+
+    @Autowired
+    ISysUserService userService;
 
     /**
      * 登录界面
@@ -25,8 +33,8 @@ public class PageCotroller {
      * @return index.html
      */
     @GetMapping("/index")
-    public String toIndex(){
-        return "index";
+    public String toIndex(@Valid TokenCheckDto dto){
+        return userService.toTokenCheck(dto) ? "index" : "login";
     }
 
 

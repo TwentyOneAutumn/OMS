@@ -35,12 +35,12 @@
 			<form class="border rounded p-5">
 				<h3 class="mb-4 text-center">Sign In</h3>
 				<div class="form-group">
-					<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Login ID" oninput = "value=value.replace(/[^\d]/g,'')" required="" v-model="loginId"/>
+					<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Login ID" oninput = "value=value.replace(/[^\d]/g,'')" required="" v-model="account"/>
 				</div>
 				<div class="form-group">
 					<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required="" v-model="password"/>
 				</div>
-				<button type="button" class="btn btn-success btn-round btn-block shadow-sm" @click.once="toLogin">Sign in</button>
+				<button type="button" class="btn btn-success btn-round btn-block shadow-sm" @click="toLogin">Sign in</button>
 				<small class="d-block mt-4 text-center"><a class="text-gray" href="#">Register an Account</a></small>
 			</form>
 		</div>
@@ -70,23 +70,31 @@
 	new Vue({
 		el: '#app',
 		data: {
-			loginId : '',
-			password : ''
+			account : '',
+			password : '',
 		},
 		methods : {
 			toLogin() {
-				axios.get('/login/check', {
-					loginId: this.loginId,
-					password: this.password
-				})
-				.then(function (response) {
-					if(response.data.code === 200 ){
-						window.location.href = 'http://localhost:8801/page/index';
+				axios({
+					method: 'get',
+					url: '/user/loginCheck',
+					params: {
+						account: this.account,
+						password: this.password
+					},
+					data: {
+
 					}
 				})
+				.then(this.loginInit)
 				.catch(function (error) {
 					window.location.href = 'http://localhost:8801/page/error?errorMsg=' + error;
 				});
+			},
+			loginInit(response){
+				if(response.data.code === 200 ){
+					window.location.href = 'http://localhost:8801/page/index?token=' + response.data.returnMsg + "&account=" + this.account;
+				}
 			}
 		}
 	});
