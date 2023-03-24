@@ -6,7 +6,7 @@ import com.oms.domain.OmsUser;
 import com.oms.domain.dto.LoginCheckDto;
 import com.oms.domain.dto.TokenCheckDto;
 
-public interface ISysUserService extends IService<OmsUser> {
+public interface IOmsUserService extends IService<OmsUser> {
 
     /**
      * 验证登录

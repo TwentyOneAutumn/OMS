@@ -7,13 +7,13 @@ import com.oms.domain.AjaxResult;
 import com.oms.domain.OmsUser;
 import com.oms.domain.dto.LoginCheckDto;
 import com.oms.domain.dto.TokenCheckDto;
-import com.oms.mapper.LoginMapper;
-import com.oms.service.ISysUserService;
+import com.oms.mapper.OmsUserMapper;
+import com.oms.service.IOmsUserService;
 import com.oms.utils.JwtUtil;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SysUserServiceImpl extends ServiceImpl<LoginMapper, OmsUser> implements ISysUserService {
+public class OmsUserServiceImpl extends ServiceImpl<OmsUserMapper, OmsUser> implements IOmsUserService {
 
     /**
      * 验证登录

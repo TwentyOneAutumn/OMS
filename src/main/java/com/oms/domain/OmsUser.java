@@ -1,23 +1,25 @@
 package com.oms.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("oms_user")
-@KeySequence("")
-@EqualsAndHashCode(callSuper = true)
+@KeySequence("UUIDKeyGenerator")
 public class OmsUser extends BaseEntitys implements Serializable {
-    private static final long serialVersionUID = 1L;
+//    private static final long serialVersionUID = 1L;
 
     /**
      * 主键ID
      */
-    @TableId(type = IdType.ASSIGN_UUID)
+    @TableId(type = IdType.INPUT)
     private String userId;
 
     /**

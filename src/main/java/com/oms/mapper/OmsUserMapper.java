@@ -5,5 +5,5 @@ import com.oms.domain.OmsUser;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface LoginMapper extends BaseMapper<OmsUser> {
+public interface OmsUserMapper extends BaseMapper<OmsUser> {
 }

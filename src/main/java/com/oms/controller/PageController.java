@@ -1,7 +1,7 @@
 package com.oms.controller;
 
 import com.oms.domain.dto.TokenCheckDto;
-import com.oms.service.ISysUserService;
+import com.oms.service.IOmsUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +14,10 @@ import javax.validation.Valid;
  */
 @Controller
 @RequestMapping("/page")
-public class PageCotroller {
+public class PageController {
 
     @Autowired
-    ISysUserService userService;
+    IOmsUserService userService;
 
     /**
      * 登录界面

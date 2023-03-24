@@ -100,7 +100,7 @@
 				</div>
 				</td>
 				<td>
-					<button type="button" class="btn btn-success btn-round">查询</button>
+					<button type="button" class="btn btn-success btn-round" @click="toList">查询</button>
 				</td>
 			</tr>
 			</tbody>
@@ -129,24 +129,25 @@
 			</tr>
 			</thead>
 			<tbody>
-				<tr>
+
+				<tr v-for = "(item) in list" :key = "id">
 					<td>
-						Mark
+						{{item.variety}}
 					</td>
 					<td>
-						Otto
+						{{item.source}}
 					</td>
 					<td>
-						@mdo
+						{{item.buyingPrice}}
 					</td>
 					<td>
-						Mark
+						{{item.isVaccine}}
 					</td>
 					<td>
-						Otto
+						{{item.isFeeding}}
 					</td>
 					<td>
-						@mdo
+						{{item.startTime}}
 					</td>
 				</tr>
 			</tbody>
@@ -270,7 +271,37 @@ FOOTER
 </script>
 
 <script>
-
+	new Vue({
+		el: '#app',
+		data: {
+			variety : '',
+			source : '',
+			isVaccine : '',
+			list : []
+		},
+		methods : {
+			toList() {
+				axios({
+					method: 'get',
+					url: '/detail/list',
+					params: {
+						variety: this.variety,
+						source: this.source,
+						isVaccine: this.isVaccine
+					}
+				})
+				.then(this.listInit)
+				.catch(function (error) {
+					window.location.href = 'http://localhost:8801/page/error?errorMsg=' + error;
+				});
+			},
+			listInit(response){
+				if(response.data.code === 200 ){
+					this.list = response.data.collection;
+				}
+			}
+		}
+	});
 </script>
 </body>
 
