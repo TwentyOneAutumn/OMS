@@ -1,13 +1,22 @@
 package com.oms.domain;
 
 import cn.hutool.core.collection.CollUtil;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.boot.jackson.JsonComponent;
+
+import java.io.Serializable;
 import java.util.Collection;
 
 /**
  * 表单数据封装
  * @param <T> 集合数据类型
  */
-public class TableInfo<T>{
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class TableInfo<T> implements Serializable {
     /**
      * 记录数
      */

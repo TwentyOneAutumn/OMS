@@ -22,19 +22,25 @@ public class AjaxResult implements Serializable {
      */
     private String returnMsg;
 
+    private Object obj;
+
     public static AjaxResult success() {
-        return new AjaxResult(HttpStatus.SUCCESS, "操作成功");
+        return new AjaxResult(HttpStatus.SUCCESS, "操作成功",null);
     }
 
     public static AjaxResult success(String msg) {
-        return new AjaxResult(HttpStatus.SUCCESS, msg);
+        return new AjaxResult(HttpStatus.SUCCESS, msg,null);
+    }
+
+    public static AjaxResult success(Object obj) {
+        return new AjaxResult(HttpStatus.SUCCESS, "操作成功",obj);
     }
 
     public static AjaxResult error() {
-        return new AjaxResult(HttpStatus.ERROR, "操作失败");
+        return new AjaxResult(HttpStatus.ERROR, "操作失败",null);
     }
 
     public static AjaxResult error(String msg) {
-        return new AjaxResult(HttpStatus.ERROR, msg);
+        return new AjaxResult(HttpStatus.ERROR, msg,null);
     }
 }

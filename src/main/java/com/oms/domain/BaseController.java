@@ -10,7 +10,7 @@ public class BaseController {
      * @param collection 集合
      * @return TableInfo
      */
-    public <T> TableInfo<T> build(Collection<T> collection){
-        return new TableInfo<>(collection);
+    public <T> TableInfo build(Collection<T> collection){
+        return new TableInfo<T>(collection);
     }
 }
