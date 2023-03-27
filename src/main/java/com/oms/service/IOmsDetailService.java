@@ -1,10 +1,7 @@
 package com.oms.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.oms.domain.AjaxResult;
-import com.oms.domain.OmsDetail;
-import com.oms.domain.OmsUser;
-import com.oms.domain.Row;
+import com.oms.domain.*;
 import com.oms.domain.dto.*;
 import com.oms.domain.vo.DetailDetailVo;
 import com.oms.domain.vo.DetailListVo;
@@ -22,7 +19,7 @@ public interface IOmsDetailService extends IService<OmsDetail> {
      * @param dto 数据对象
      * @return TableInfo
      */
-    List<DetailListVo> toList(DetailListDto dto);
+    TableInfo<DetailListVo> toList(DetailListDto dto);
 
     /**
      * 明细

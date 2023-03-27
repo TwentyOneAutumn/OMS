@@ -4,9 +4,9 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.oms.domain.AjaxResult;
-import com.oms.domain.OmsDetail;
-import com.oms.domain.OmsUser;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.oms.domain.*;
 import com.oms.domain.Row;
 import com.oms.domain.dto.*;
 import com.oms.domain.vo.DetailDetailVo;
@@ -33,7 +33,8 @@ public class OmsDetailServiceImpl extends ServiceImpl<OmsDetailMapper, OmsDetail
      * @return TableInfo
      */
     @Override
-    public List<DetailListVo> toList(DetailListDto dto) {
+    public TableInfo<DetailListVo> toList(DetailListDto dto) {
+        Page<Object> page = PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         LambdaQueryWrapper<OmsDetail> wrapper = new LambdaQueryWrapper<OmsDetail>()
                 .isNotNull(OmsDetail::getVaccineId);
         String variety = dto.getVariety();
@@ -54,7 +55,7 @@ public class OmsDetailServiceImpl extends ServiceImpl<OmsDetailMapper, OmsDetail
             // 处理饲养状态
             vo.setIsFeeding(true);
         });
-        return voList;
+        return Build.buildTable(page.getPages(),voList);
     }
 
     /**

@@ -72,6 +72,7 @@
 		data: {
 			account : '',
 			password : '',
+			role : ''
 		},
 		methods : {
 			toLogin() {
@@ -81,9 +82,6 @@
 					params: {
 						account: this.account,
 						password: this.password
-					},
-					data: {
-
 					}
 				})
 				.then(this.loginInit)

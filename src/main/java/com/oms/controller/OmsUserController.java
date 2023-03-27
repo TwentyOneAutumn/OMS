@@ -1,7 +1,7 @@
 package com.oms.controller;
 
 import com.oms.domain.AjaxResult;
-import com.oms.domain.BaseController;
+import com.oms.domain.Build;
 import com.oms.domain.dto.LoginCheckDto;
 import com.oms.service.IOmsUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/user")
-public class OmsUserController extends BaseController {
+public class OmsUserController extends Build {
 
     @Autowired
     private IOmsUserService loginService;

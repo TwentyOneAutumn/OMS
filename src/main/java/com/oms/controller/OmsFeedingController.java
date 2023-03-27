@@ -1,6 +1,7 @@
 package com.oms.controller;
 
 import com.oms.domain.AjaxResult;
+import com.oms.domain.Build;
 import com.oms.domain.Row;
 import com.oms.domain.TableInfo;
 import com.oms.domain.dto.*;
@@ -20,16 +21,16 @@ public class OmsFeedingController {
     @Autowired
     private IOmsFeedingService feedingService;
 
-//    /**
-//     * 根据条件查询列表
-//     *
-//     * @param dto 数据对象
-//     * @return TableInfo
-//     */
-//    @GetMapping("/list")
-//    public TableInfo toList(@Valid FeedingListDto dto){
-//        return build(feedingService.toList(dto));
-//    }
+    /**
+     * 根据条件查询列表
+     *
+     * @param dto 数据对象
+     * @return TableInfo
+     */
+    @GetMapping("/list")
+    public TableInfo<FeedingListVo> toList(@Valid FeedingListDto dto){
+        return Build.buildTable(feedingService.toList(dto));
+    }
 
     /**
      * 明细

@@ -1,7 +1,7 @@
 package com.oms.controller;
 
 import com.oms.domain.AjaxResult;
-import com.oms.domain.BaseController;
+import com.oms.domain.Build;
 import com.oms.domain.Row;
 import com.oms.domain.TableInfo;
 import com.oms.domain.dto.*;
@@ -16,7 +16,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/detail")
-public class OmsDetailController extends BaseController {
+public class OmsDetailController{
 
     @Autowired
     private IOmsDetailService detailService;
@@ -28,8 +28,8 @@ public class OmsDetailController extends BaseController {
      * @return TableInfo
      */
     @GetMapping("/list")
-    public TableInfo toList(@Valid DetailListDto dto){
-        return build(detailService.toList(dto));
+    public TableInfo<DetailListVo> toList(@Valid DetailListDto dto){
+        return detailService.toList(dto);
     }
 
     /**

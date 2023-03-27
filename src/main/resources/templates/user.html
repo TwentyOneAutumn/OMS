@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="utf-8"/>
-<link rel="apple-touch-icon" sizes="76x76" th:href="@{/assets/img/favicon.ico}">
-<link rel="icon" type="image/png" th:href="@{/assets/img/favicon.ico}">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>首页</title>
-<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport'/>
-    
-<!-- Main CSS -->
-<link th:href="@{/assets/css/main.css}" rel="stylesheet"/>
-    
-<!-- Animation CSS -->
-<link th:href="@{/assets/css/vendor/aos.css}" rel="stylesheet"/>
-    
+	<meta charset="utf-8"/>
+	<link rel="apple-touch-icon" sizes="76x76" th:href="@{/assets/img/favicon.ico}">
+	<link rel="icon" type="image/png" th:href="@{/assets/img/favicon.ico}">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<title>首页</title>
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport'/>
+
+	<!-- Main CSS -->
+	<link th:href="@{/assets/css/main.css}" rel="stylesheet"/>
+
+	<!-- Animation CSS -->
+	<link th:href="@{/assets/css/vendor/aos.css}" rel="stylesheet"/>
+
 </head>
 
 <body>
@@ -60,72 +60,72 @@
 <main class="container">
 	<section class="pt-4 pb-5 " data-aos="fade-up">
 		<div id="omsVueApp">
-		<table class="table text-center" style="margin-bottom:0;margin-top: 100px">
-			<thead class="thead-dark">
-			<tr>
-				<th scope="col">
-					品种
-				</th>
-				<th scope="col">
-					来源
-				</th>
-				<th scope="col">
-					疫苗情况
-				</th>
-				<th scope="col">
-					操作
-				</th>
-			</tr>
-			</thead>
-			<tbody>
-			<tr>
-				<td>
-					<input type="text" class="form-control input-round" placeholder="请输入..." v-model="variety">
-				</td>
-				<td>
-					<input type="text" class="form-control input-round" placeholder="请输入..." v-model="source">
-				</td>
-				<td>
-					<div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin: 0;">
-						<label class="btn btn-secondary active" @click="isTrue">
-							<input type="radio" name="options" id="option2" checked/> 已接种
-						</label>
-						<label class="btn btn-secondary" @click="isFalse">
-							<input type="radio" name="options" id="option3" /> 未接种
-						</label>
-					</div>
-				</td>
-				<td>
-					<button type="button" class="btn btn-success btn-round" @click="toList">查询</button>
-					<button type="button" class="btn btn-success btn-round" @click="toAdd">新增</button>
-				</td>
-			</tr>
-			</tbody>
-		</table>
-		<table class="table text-center" style="margin-bottom: 50px">
-			<thead class="thead-dark">
-			<tr>
-				<th scope="col">
-					来源
-				</th>
-				<th scope="col">
-					品种
-				</th>
-				<th scope="col">
-					购买价格
-				</th>
-				<th scope="col">
-					疫苗情况
-				</th>
-				<th scope="col">
-					饲养情况
-				</th>
-				<th scope="col">
-					入库时间
-				</th>
-			</tr>
-			</thead>
-			<tbody>
+			<table class="table text-center" style="margin-bottom:0;margin-top: 100px">
+				<thead class="thead-dark">
+				<tr>
+					<th scope="col">
+						品种
+					</th>
+					<th scope="col">
+						来源
+					</th>
+					<th scope="col">
+						疫苗情况
+					</th>
+					<th scope="col">
+						操作
+					</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td>
+						<input type="text" class="form-control input-round" placeholder="请输入..." v-model="variety">
+					</td>
+					<td>
+						<input type="text" class="form-control input-round" placeholder="请输入..." v-model="source">
+					</td>
+					<td>
+						<div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin: 0;">
+							<label class="btn btn-secondary active" @click="isTrue">
+								<input type="radio" name="options" id="option2" checked/> 已接种
+							</label>
+							<label class="btn btn-secondary" @click="isFalse">
+								<input type="radio" name="options" id="option3" /> 未接种
+							</label>
+						</div>
+					</td>
+					<td>
+						<button type="button" class="btn btn-success btn-round" @click="toList">查询</button>
+						<button type="button" class="btn btn-success btn-round" @click="toAdd">新增</button>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+			<table class="table text-center" style="margin-bottom: 50px">
+				<thead class="thead-dark">
+				<tr>
+					<th scope="col">
+						来源
+					</th>
+					<th scope="col">
+						品种
+					</th>
+					<th scope="col">
+						购买价格
+					</th>
+					<th scope="col">
+						疫苗情况
+					</th>
+					<th scope="col">
+						饲养情况
+					</th>
+					<th scope="col">
+						入库时间
+					</th>
+				</tr>
+				</thead>
+				<tbody>
 				<tr v-for = "(item) in list" :key = "item.id">
 					<td>
 						{{item.variety}}
@@ -146,17 +146,17 @@
 						{{item.startTime}}
 					</td>
 				</tr>
-			</tbody>
-		</table>
-		<nav aria-label="Page navigation example" style="margin-top: -30px;margin-bottom: 50px;">
-			<ul class="pagination" >
-				<li class="page-item"><i class="fas fa-angle-left"></i></a></li>
-				<div v-for = "(page) in pageList">
-					<li class="page-item"><a class="page-link" @click="toList(page)">{{page}}</a></li>
-				</div>
-				<li class="page-item"><i class="fas fa-angle-right"></i></a></li>
-			</ul>
-		</nav>
+				</tbody>
+			</table>
+			<nav aria-label="Page navigation example" style="margin-top: -30px;margin-bottom: 50px;">
+				<ul class="pagination" >
+					<li class="page-item"><i class="fas fa-angle-left"></i></a></li>
+					<div v-for = "(page) in pageList">
+						<li class="page-item"><a class="page-link" @click="toList(page)">{{page}}</a></li>
+					</div>
+					<li class="page-item"><i class="fas fa-angle-right"></i></a></li>
+				</ul>
+			</nav>
 		</div>
 	</section>
 </main>
@@ -202,13 +202,13 @@ FOOTER
 		});
 	});
 
-    $(function () {
-      $('[data-toggle="popover"]').popover()
-    });
+	$(function () {
+		$('[data-toggle="popover"]').popover()
+	});
 
-    $('.popover-dismiss').popover({
-      trigger: 'focus'
-    });
+	$('.popover-dismiss').popover({
+		trigger: 'focus'
+	});
 
 	$(function () {
 		$('[data-toggle="tooltip"]').tooltip()
@@ -253,16 +253,15 @@ FOOTER
 						pageNum : this.pageNum
 					}
 				})
-				.then(this.listInit)
-				.catch(function (error) {
-					alert(error)
-				});
+						.then(this.listInit)
+						.catch(function (error) {
+							alert(error)
+						});
 			},
 			listInit(response){
 				if(response.data.code === 200 ){
 					this.list = response.data.collection;
 					this.total = response.data.total;
-					response.data.
 					this.pageList = [];
 					const num = parseInt((this.total%100)/10);
 					for (i = 1; i <= num+1; i++) {

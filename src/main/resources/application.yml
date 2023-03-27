@@ -1,7 +1,6 @@
 server:
   port: 8801
 spring:
-  mvc:
   thymeleaf:
     cache: true
     check-template: true
@@ -20,14 +19,18 @@ spring:
 
 mybatis-plus:
   mapper-locations: classpath*:/Mapper/*Mapper.xml
-  type-aliases-package: com.demo.DoMain # 类别名包扫描
+  type-aliases-package: com.oms.domain # 类别名包扫描
   configuration:
     call-setters-on-nulls: true   # 当查询到的字段为空是,是否调用set方法对属性进行Null值的初始化
     local-cache-scope: session  # 默认为session级别缓存,STATEMENT:关闭一级缓存
-    cache-enabled: true   #是否开启二级缓存,默认为true
+    cache-enabled: false   #是否开启二级缓存,默认为true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 打印SQL
   global-config:  # 全局配置
     banner: false   # 是否控制台输出 MybatisPlus的LOGO
+  configuration-properties:
+    offsetAsPageNum: true
+    rowBoundsWithCount: true
+    reasonable: true
 
 logging:
   level:

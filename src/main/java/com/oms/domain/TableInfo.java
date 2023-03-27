@@ -4,7 +4,6 @@ import cn.hutool.core.collection.CollUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.jackson.JsonComponent;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -20,27 +19,34 @@ public class TableInfo<T> implements Serializable {
     /**
      * 记录数
      */
-    private int num;
+    private int Total;
 
     /**
      * 状态码
      */
-    private int code;
+    private int Code;
 
     /**
      * 信息
      */
-    private String msg;
+    private String Msg;
 
     /**
      * 数据
      */
-    private Collection<T> collection;
+    private Collection<T> Collection;
 
     public TableInfo(Collection<T> collection){
-        this.num = CollUtil.isNotEmpty(collection) ? collection.size() : 0;
-        this.code = HttpStatus.SUCCESS;
-        this.msg = "操作成功";
-        this.collection = collection;
+        this.Total = CollUtil.isNotEmpty(collection) ? collection.size() : 0;
+        this.Code = HttpStatus.SUCCESS;
+        this.Msg = "操作成功";
+        this.Collection = collection;
+    }
+
+    public TableInfo(int total,Collection<T> collection){
+        this.Total = total;
+        this.Code = HttpStatus.SUCCESS;
+        this.Msg = "操作成功";
+        this.Collection = collection;
     }
 }
