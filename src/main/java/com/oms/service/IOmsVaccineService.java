@@ -2,19 +2,17 @@ package com.oms.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.oms.domain.AjaxResult;
-import com.oms.domain.OmsDetail;
-import com.oms.domain.OmsUser;
+import com.oms.domain.OmsVaccine;
 import com.oms.domain.Row;
 import com.oms.domain.dto.*;
-import com.oms.domain.vo.DetailDetailVo;
-import com.oms.domain.vo.DetailListVo;
+import com.oms.domain.vo.*;
 
 import java.util.List;
 
 /**
- * 养殖明细Service
+ * 疫苗Service
  */
-public interface IOmsDetailService extends IService<OmsDetail> {
+public interface IOmsVaccineService extends IService<OmsVaccine> {
 
     /**
      * 根据条件查询列表
@@ -22,7 +20,7 @@ public interface IOmsDetailService extends IService<OmsDetail> {
      * @param dto 数据对象
      * @return TableInfo
      */
-    List<DetailListVo> toList(DetailListDto dto);
+    List<VaccineListVo> toList(VaccineListDto dto);
 
     /**
      * 明细
@@ -30,7 +28,7 @@ public interface IOmsDetailService extends IService<OmsDetail> {
      * @param dto 数据对象
      * @return AjaxResult
      */
-    Row<DetailDetailVo> toDetail(DetailDetailDto dto);
+    Row<VaccineDetailVo> toDetail(VaccineDetailDto dto);
 
     /**
      * 新增
@@ -38,7 +36,7 @@ public interface IOmsDetailService extends IService<OmsDetail> {
      * @param dto 数据对象
      * @return AjaxResult
      */
-    AjaxResult toAdd(DetailAddDto dto);
+    AjaxResult toAdd(VaccineAddDto dto);
 
     /**
      * 修改
@@ -46,7 +44,7 @@ public interface IOmsDetailService extends IService<OmsDetail> {
      * @param dto 数据对象
      * @return AjaxResult
      */
-    AjaxResult toEdit(DetailEditDto dto);
+    AjaxResult toEdit(VaccineEditDto dto);
 
     /**
      * 删除
@@ -54,5 +52,5 @@ public interface IOmsDetailService extends IService<OmsDetail> {
      * @param dto 数据对象
      * @return AjaxResult
      */
-    AjaxResult toDelete(DetailDeleteDto dto);
+    AjaxResult toDelete(VaccineDeleteDto dto);
 }

@@ -7,9 +7,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.oms.domain.AjaxResult;
 import com.oms.domain.OmsDetail;
 import com.oms.domain.OmsUser;
-import com.oms.domain.dto.DetailListDto;
-import com.oms.domain.dto.LoginCheckDto;
-import com.oms.domain.dto.TokenCheckDto;
+import com.oms.domain.Row;
+import com.oms.domain.dto.*;
+import com.oms.domain.vo.DetailDetailVo;
 import com.oms.domain.vo.DetailListVo;
 import com.oms.mapper.OmsDetailMapper;
 import com.oms.mapper.OmsUserMapper;
@@ -20,6 +20,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * 养殖明细ServiceImpl
+ */
 @Service
 public class OmsDetailServiceImpl extends ServiceImpl<OmsDetailMapper, OmsDetail> implements IOmsDetailService {
 
@@ -52,5 +55,62 @@ public class OmsDetailServiceImpl extends ServiceImpl<OmsDetailMapper, OmsDetail
             vo.setIsFeeding(true);
         });
         return voList;
+    }
+
+    /**
+     * 明细
+     *
+     * @param dto 数据对象
+     * @return AjaxResult
+     */
+    @Override
+    public Row<DetailDetailVo> toDetail(DetailDetailDto dto) {
+        OmsDetail pojo = getById(dto.getId());
+        if(BeanUtil.isEmpty(pojo)){
+            throw new RuntimeException("数据不存在");
+        }
+        return Row.success(BeanUtil.toBean(pojo,DetailDetailVo.class));
+    }
+
+    /**
+     * 新增
+     *
+     * @param dto 数据对象
+     * @return AjaxResult
+     */
+    @Override
+    public AjaxResult toAdd(DetailAddDto dto) {
+        OmsDetail pojo = BeanUtil.toBean(dto, OmsDetail.class);
+        return save(pojo) ? AjaxResult.success() : AjaxResult.error();
+    }
+
+    /**
+     * 修改
+     *
+     * @param dto 数据对象
+     * @return AjaxResult
+     */
+    @Override
+    public AjaxResult toEdit(DetailEditDto dto) {
+        if(BeanUtil.isEmpty(getById(dto.getId()))){
+            throw new RuntimeException("数据不存在");
+        }
+        OmsDetail pojo = BeanUtil.toBean(dto, OmsDetail.class);
+        return updateById(pojo) ? AjaxResult.success() : AjaxResult.error();
+    }
+
+    /**
+     * 删除
+     *
+     * @param dto 数据对象
+     * @return AjaxResult
+     */
+    @Override
+    public AjaxResult toDelete(DetailDeleteDto dto) {
+        String id = dto.getId();
+        if(BeanUtil.isEmpty(getById(id))){
+            throw new RuntimeException("数据不存在");
+        }
+        return removeById(id) ? AjaxResult.success() : AjaxResult.error();
     }
 }

@@ -2,19 +2,18 @@ package com.oms.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.oms.domain.AjaxResult;
-import com.oms.domain.OmsDetail;
-import com.oms.domain.OmsUser;
+import com.oms.domain.OmsTransaction;
 import com.oms.domain.Row;
 import com.oms.domain.dto.*;
-import com.oms.domain.vo.DetailDetailVo;
-import com.oms.domain.vo.DetailListVo;
+import com.oms.domain.vo.TransactionDetailVo;
+import com.oms.domain.vo.TransactionListVo;
 
 import java.util.List;
 
 /**
- * 养殖明细Service
+ * 交易Service
  */
-public interface IOmsDetailService extends IService<OmsDetail> {
+public interface IOmsTransactionService extends IService<OmsTransaction> {
 
     /**
      * 根据条件查询列表
@@ -22,7 +21,7 @@ public interface IOmsDetailService extends IService<OmsDetail> {
      * @param dto 数据对象
      * @return TableInfo
      */
-    List<DetailListVo> toList(DetailListDto dto);
+    List<TransactionListVo> toList(TransactionListDto dto);
 
     /**
      * 明细
@@ -30,7 +29,7 @@ public interface IOmsDetailService extends IService<OmsDetail> {
      * @param dto 数据对象
      * @return AjaxResult
      */
-    Row<DetailDetailVo> toDetail(DetailDetailDto dto);
+    Row<TransactionDetailVo> toDetail(TransactionDetailDto dto);
 
     /**
      * 新增
@@ -38,7 +37,7 @@ public interface IOmsDetailService extends IService<OmsDetail> {
      * @param dto 数据对象
      * @return AjaxResult
      */
-    AjaxResult toAdd(DetailAddDto dto);
+    AjaxResult toAdd(TransactionAddDto dto);
 
     /**
      * 修改
@@ -46,7 +45,7 @@ public interface IOmsDetailService extends IService<OmsDetail> {
      * @param dto 数据对象
      * @return AjaxResult
      */
-    AjaxResult toEdit(DetailEditDto dto);
+    AjaxResult toEdit(TransactionEditDto dto);
 
     /**
      * 删除
@@ -54,5 +53,5 @@ public interface IOmsDetailService extends IService<OmsDetail> {
      * @param dto 数据对象
      * @return AjaxResult
      */
-    AjaxResult toDelete(DetailDeleteDto dto);
+    AjaxResult toDelete(TransactionDeleteDto dto);
 }
