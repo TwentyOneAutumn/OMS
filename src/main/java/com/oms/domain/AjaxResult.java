@@ -15,12 +15,12 @@ public class AjaxResult implements Serializable {
     /**
      * 状态码
      */
-    private int Code;
+    private int code;
 
     /**
      * 信息
      */
-    private String Msg;
+    private String msg;
 
     public static AjaxResult success() {
         return new AjaxResult(HttpStatus.SUCCESS, "操作成功");

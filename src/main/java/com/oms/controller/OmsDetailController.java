@@ -49,7 +49,7 @@ public class OmsDetailController{
      * @param dto 数据对象
      * @return AjaxResult
      */
-    @GetMapping("/add")
+    @PostMapping("/add")
     public AjaxResult toAdd(@Valid @RequestBody DetailAddDto dto){
         return detailService.toAdd(dto);
     }

@@ -22,4 +22,24 @@ public class Build {
     public static  <T> TableInfo<T> buildTable(int total, Collection<T> collection){
         return new TableInfo<T>(total,collection);
     }
+
+    /**
+     * 构建Row
+     * @param row 数据
+     * @param <T> 泛型
+     * @return Row
+     */
+    public static <T> Row<T> buildRow(T row){
+        return new Row<T>(HttpStatus.SUCCESS, "操作成功", row);
+    }
+
+    /**
+     * 构建Row
+     * @param flg 是否成功
+     * @param <T> 泛型
+     * @return Row
+     */
+    public static <T> Row<T> buildRow(boolean flg){
+        return flg ? new Row<T>(HttpStatus.SUCCESS,"操作成功",null) : new Row<T>(HttpStatus.ERROR,"操作失败",null);
+    }
 }

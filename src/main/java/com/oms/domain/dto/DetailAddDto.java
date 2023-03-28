@@ -16,14 +16,4 @@ public class DetailAddDto implements Serializable {
      * 来源
      */
     private String source;
-
-    /**
-     * 入库时间
-     */
-    private LocalDate startTime;
-
-    /**
-     * 出库时间
-     */
-    private LocalDate endTime;
 }

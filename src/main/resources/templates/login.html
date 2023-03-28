@@ -91,7 +91,7 @@
 			},
 			loginInit(response){
 				if(response.data.code === 200 ){
-					window.location.href = 'http://localhost:8801/page/index?token=' + response.data.returnMsg + "&account=" + this.account;
+					window.location.href = 'http://localhost:8801/page/index?token=' + response.data.row + "&account=" + this.account;
 				}
 			}
 		}

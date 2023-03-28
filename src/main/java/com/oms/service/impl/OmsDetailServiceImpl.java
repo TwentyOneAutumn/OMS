@@ -18,6 +18,8 @@ import com.oms.service.IOmsUserService;
 import com.oms.utils.JwtUtil;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -35,8 +37,7 @@ public class OmsDetailServiceImpl extends ServiceImpl<OmsDetailMapper, OmsDetail
     @Override
     public TableInfo<DetailListVo> toList(DetailListDto dto) {
         Page<Object> page = PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
-        LambdaQueryWrapper<OmsDetail> wrapper = new LambdaQueryWrapper<OmsDetail>()
-                .isNotNull(OmsDetail::getVaccineId);
+        LambdaQueryWrapper<OmsDetail> wrapper = new LambdaQueryWrapper<>();
         String variety = dto.getVariety();
         String source = dto.getSource();
         if(StrUtil.isNotEmpty(variety)){
@@ -82,6 +83,7 @@ public class OmsDetailServiceImpl extends ServiceImpl<OmsDetailMapper, OmsDetail
     @Override
     public AjaxResult toAdd(DetailAddDto dto) {
         OmsDetail pojo = BeanUtil.toBean(dto, OmsDetail.class);
+        pojo.setStartTime(LocalDate.now());
         return save(pojo) ? AjaxResult.success() : AjaxResult.error();
     }
 

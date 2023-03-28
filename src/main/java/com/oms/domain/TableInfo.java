@@ -19,34 +19,34 @@ public class TableInfo<T> implements Serializable {
     /**
      * 记录数
      */
-    private int Total;
+    private int total;
 
     /**
      * 状态码
      */
-    private int Code;
+    private int code;
 
     /**
      * 信息
      */
-    private String Msg;
+    private String msg;
 
     /**
      * 数据
      */
-    private Collection<T> Collection;
+    private Collection<T> collection;
 
     public TableInfo(Collection<T> collection){
-        this.Total = CollUtil.isNotEmpty(collection) ? collection.size() : 0;
-        this.Code = HttpStatus.SUCCESS;
-        this.Msg = "操作成功";
-        this.Collection = collection;
+        this.total = CollUtil.isNotEmpty(collection) ? collection.size() : 0;
+        this.code = HttpStatus.SUCCESS;
+        this.msg = "操作成功";
+        this.collection = collection;
     }
 
     public TableInfo(int total,Collection<T> collection){
-        this.Total = total;
-        this.Code = HttpStatus.SUCCESS;
-        this.Msg = "操作成功";
-        this.Collection = collection;
+        this.total = total;
+        this.code = HttpStatus.SUCCESS;
+        this.msg = "操作成功";
+        this.collection = collection;
     }
 }

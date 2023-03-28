@@ -4,7 +4,9 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.oms.domain.AjaxResult;
+import com.oms.domain.Build;
 import com.oms.domain.OmsUser;
+import com.oms.domain.Row;
 import com.oms.domain.dto.LoginCheckDto;
 import com.oms.domain.dto.TokenCheckDto;
 import com.oms.mapper.OmsUserMapper;
@@ -22,12 +24,12 @@ public class OmsUserServiceImpl extends ServiceImpl<OmsUserMapper, OmsUser> impl
      * @return 状态
      */
     @Override
-    public AjaxResult toLoginCheck(LoginCheckDto dto) {
+    public Row<String> toLoginCheck(LoginCheckDto dto) {
         int count = count(new LambdaQueryWrapper<OmsUser>()
                 .eq(OmsUser::getUserAccount, dto.getAccount())
                 .eq(OmsUser::getPassword, dto.getPassword())
         );
-        return count == 1 ? AjaxResult.success(JwtUtil.getToken(dto.getAccount(),dto.getPassword())) : AjaxResult.error();
+        return count == 1 ? Build.buildRow(JwtUtil.getToken(dto.getAccount(),dto.getPassword())) : Build.buildRow(false);
     }
 
     /**

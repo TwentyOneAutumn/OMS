@@ -36,6 +36,6 @@ public class Row<T> implements Serializable {
     }
 
     public static  <T> Row<T> success(T row){
-        return new Row<T>(HttpStatus.ERROR, "操作成功", row);
+        return new Row<T>(HttpStatus.SUCCESS, "操作成功", row);
     }
 }
