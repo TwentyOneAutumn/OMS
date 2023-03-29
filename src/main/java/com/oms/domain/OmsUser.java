@@ -8,11 +8,13 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("oms_user")
 @KeySequence("UUIDKeyGenerator")
+@EqualsAndHashCode(callSuper = true)
 public class OmsUser extends BaseEntitys implements Serializable {
 //    private static final long serialVersionUID = 1L;
 
@@ -41,12 +43,6 @@ public class OmsUser extends BaseEntitys implements Serializable {
      * 角色
      */
     private String role;
-
-    /**
-     * 删除状态
-     */
-    @TableLogic
-    private Boolean isDeleted;
 }
 
 

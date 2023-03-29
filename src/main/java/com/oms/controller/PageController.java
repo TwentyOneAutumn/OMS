@@ -37,49 +37,39 @@ public class PageController {
         return userService.toTokenCheck(dto) ? "index" : "login";
     }
 
-
     /**
-     * 登录界面
-     * @return login.html
+     * 用户界面
+     * @return user.html
      */
-    @GetMapping("/table")
-    public String toTable(){
-        return "table";
+    @GetMapping("/user")
+    public String toUser(@Valid TokenCheckDto dto){
+        return userService.toTokenCheck(dto) ? "user" : "login";
     }
 
     /**
-     * 登录界面
-     * @return login.html
+     * 饲养界面
+     * @return feeding.html
      */
-    @GetMapping("/blog")
-    public String toBlogx(){
-        return "blog";
+    @GetMapping("/feeding")
+    public String toFeeding(@Valid TokenCheckDto dto){
+        return userService.toTokenCheck(dto) ? "feeding" : "login";
     }
 
     /**
-     * 登录界面
-     * @return login.html
+     * 收支界面
+     * @return transaction.html
      */
-    @GetMapping("/docs")
-    public String toDocs(){
-        return "docs";
+    @GetMapping("/transaction")
+    public String toTransaction(@Valid TokenCheckDto dto){
+        return userService.toTokenCheck(dto) ? "transaction" : "login";
     }
 
     /**
-     * 登录界面
-     * @return login.html
+     * 疫苗界面
+     * @return vaccine.html
      */
-    @GetMapping("/landing")
-    public String toLanding(){
-        return "landing";
-    }
-
-    /**
-     * 登录界面
-     * @return login.html
-     */
-    @GetMapping("/starter-template")
-    public String toStarterTemplate(){
-        return "starter-template";
+    @GetMapping("/vaccine")
+    public String toVaccine(@Valid TokenCheckDto dto){
+        return userService.toTokenCheck(dto) ? "vaccine" : "login";
     }
 }

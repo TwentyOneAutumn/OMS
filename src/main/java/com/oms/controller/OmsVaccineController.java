@@ -2,6 +2,7 @@ package com.oms.controller;
 
 import com.oms.domain.AjaxResult;
 import com.oms.domain.Row;
+import com.oms.domain.TableInfo;
 import com.oms.domain.dto.*;
 import com.oms.domain.vo.*;
 import com.oms.service.IOmsVaccineService;
@@ -19,16 +20,16 @@ public class OmsVaccineController {
     @Autowired
     private IOmsVaccineService vaccineService;
 
-//    /**
-//     * 根据条件查询列表
-//     *
-//     * @param dto 数据对象
-//     * @return TableInfo
-//     */
-//    @GetMapping("/list")
-//    public TableInfo toList(@Valid VaccineListDto dto){
-//        return build(VaccineService.toList(dto));
-//    }
+    /**
+     * 根据条件查询列表
+     *
+     * @param dto 数据对象
+     * @return TableInfo
+     */
+    @GetMapping("/list")
+    public TableInfo<VaccineListVo> toList(@Valid VaccineListDto dto){
+        return vaccineService.toList(dto);
+    }
 
     /**
      * 明细

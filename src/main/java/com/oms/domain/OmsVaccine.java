@@ -1,4 +1,58 @@
 package com.oms.domain;
 
-public class OmsVaccine {
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.KeySequence;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@TableName("oms_vaccine")
+@KeySequence("UUIDKeyGenerator")
+@EqualsAndHashCode(callSuper = true)
+public class OmsVaccine  extends BaseEntitys implements Serializable {
+
+    /**
+     * 主键ID
+     */
+    @TableId(type = IdType.INPUT)
+    private String id;
+
+    /**
+     * 疫苗名称
+     */
+    private String vaccineName;
+
+    /**
+     * 疫苗类型
+     */
+    private String vaccineType;
+
+    /**
+     * 疫苗价格
+     */
+    private Integer vaccinePrice;
+
+    /**
+     *
+     */
+    private LocalDate injectTime;
+
+    /**
+     *
+     */
+    private String responsiblePersonId;
+
+    /**
+     *
+     */
+    private String responsiblePersonName;
 }

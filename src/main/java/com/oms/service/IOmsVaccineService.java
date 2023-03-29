@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.oms.domain.AjaxResult;
 import com.oms.domain.OmsVaccine;
 import com.oms.domain.Row;
+import com.oms.domain.TableInfo;
 import com.oms.domain.dto.*;
 import com.oms.domain.vo.*;
 
@@ -20,7 +21,7 @@ public interface IOmsVaccineService extends IService<OmsVaccine> {
      * @param dto 数据对象
      * @return TableInfo
      */
-    List<VaccineListVo> toList(VaccineListDto dto);
+    TableInfo<VaccineListVo> toList(VaccineListDto dto);
 
     /**
      * 明细

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.oms.domain.AjaxResult;
 import com.oms.domain.OmsVaccine;
 import com.oms.domain.Row;
+import com.oms.domain.TableInfo;
 import com.oms.domain.dto.*;
 import com.oms.domain.vo.*;
 import com.oms.mapper.OmsVaccineMapper;
@@ -26,7 +27,7 @@ public class OmsVaccineServiceImpl extends ServiceImpl<OmsVaccineMapper, OmsVacc
      * @return TableInfo
      */
     @Override
-    public List<VaccineListVo> toList(VaccineListDto dto) {
+    public TableInfo<VaccineListVo> toList(VaccineListDto dto) {
 //        LambdaQueryWrapper<OmsVaccine> wrapper = new LambdaQueryWrapper<OmsVaccine>()
 //                .isNotNull(OmsVaccine::getVaccineId);
 //        String variety = dto.getVariety();

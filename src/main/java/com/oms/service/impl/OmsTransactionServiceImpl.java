@@ -5,13 +5,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.oms.domain.AjaxResult;
 import com.oms.domain.OmsTransaction;
 import com.oms.domain.Row;
+import com.oms.domain.TableInfo;
 import com.oms.domain.dto.*;
 import com.oms.domain.vo.*;
 import com.oms.mapper.OmsTransactionMapper;
 import com.oms.service.IOmsTransactionService;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * 交易ServiceImpl
@@ -26,7 +25,7 @@ public class OmsTransactionServiceImpl extends ServiceImpl<OmsTransactionMapper,
      * @return TableInfo
      */
     @Override
-    public List<TransactionListVo> toList(TransactionListDto dto) {
+    public TableInfo<TransactionListVo> toList(TransactionListDto dto) {
 //        LambdaQueryWrapper<OmsTransaction> wrapper = new LambdaQueryWrapper<OmsTransaction>()
 //                .isNotNull(OmsTransaction::getVaccineId);
 //        String variety = dto.getVariety();

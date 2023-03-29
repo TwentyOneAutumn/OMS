@@ -2,6 +2,7 @@ package com.oms.controller;
 
 import com.oms.domain.AjaxResult;
 import com.oms.domain.Row;
+import com.oms.domain.TableInfo;
 import com.oms.domain.dto.*;
 import com.oms.domain.vo.*;
 import com.oms.service.IOmsTransactionService;
@@ -20,16 +21,16 @@ public class OmsTransactionController {
     @Autowired
     private IOmsTransactionService TransactionService;
 
-//    /**
-//     * 根据条件查询列表
-//     *
-//     * @param dto 数据对象
-//     * @return TableInfo
-//     */
-//    @GetMapping("/list")
-//    public TableInfo toList(@Valid TransactionListDto dto){
-//        return build(TransactionService.toList(dto));
-//    }
+    /**
+     * 根据条件查询列表
+     *
+     * @param dto 数据对象
+     * @return TableInfo
+     */
+    @GetMapping("/list")
+    public TableInfo<TransactionListVo> toList(@Valid TransactionListDto dto){
+        return TransactionService.toList(dto);
+    }
 
     /**
      * 明细

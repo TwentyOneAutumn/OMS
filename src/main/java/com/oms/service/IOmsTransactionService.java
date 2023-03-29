@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.oms.domain.AjaxResult;
 import com.oms.domain.OmsTransaction;
 import com.oms.domain.Row;
+import com.oms.domain.TableInfo;
 import com.oms.domain.dto.*;
 import com.oms.domain.vo.TransactionDetailVo;
 import com.oms.domain.vo.TransactionListVo;
@@ -21,7 +22,7 @@ public interface IOmsTransactionService extends IService<OmsTransaction> {
      * @param dto 数据对象
      * @return TableInfo
      */
-    List<TransactionListVo> toList(TransactionListDto dto);
+    TableInfo<TransactionListVo> toList(TransactionListDto dto);
 
     /**
      * 明细

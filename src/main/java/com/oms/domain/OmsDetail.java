@@ -1,10 +1,12 @@
 package com.oms.domain;
 
-
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.KeySequence;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
@@ -15,11 +17,13 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @TableName("oms_detail")
 @KeySequence("UUIDKeyGenerator")
-public class OmsDetail  extends BaseEntitys implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class OmsDetail extends BaseEntitys implements Serializable {
 
     /**
      * 主键ID
      */
+    @TableId(type = IdType.INPUT)
     private String id;
 
     /**
