@@ -22,11 +22,6 @@ public class DetailEditDto {
     private String source;
 
     /**
-     * 入库时间
-     */
-    private LocalDate startTime;
-
-    /**
      * 出库时间
      */
     private LocalDate endTime;

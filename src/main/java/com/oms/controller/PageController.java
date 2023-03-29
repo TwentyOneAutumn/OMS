@@ -2,11 +2,14 @@ package com.oms.controller;
 
 import com.oms.domain.dto.TokenCheckDto;
 import com.oms.service.IOmsUserService;
+import com.oms.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 /**
@@ -33,8 +36,8 @@ public class PageController {
      * @return index.html
      */
     @GetMapping("/index")
-    public String toIndex(@Valid TokenCheckDto dto){
-        return userService.toTokenCheck(dto) ? "index" : "login";
+    public String toIndex(HttpServletRequest request, HttpServletResponse response){
+        return userService.toTokenCheck(request,response) ? "index" : "login";
     }
 
     /**
@@ -42,8 +45,8 @@ public class PageController {
      * @return user.html
      */
     @GetMapping("/user")
-    public String toUser(@Valid TokenCheckDto dto){
-        return userService.toTokenCheck(dto) ? "user" : "login";
+    public String toUser(HttpServletRequest request, HttpServletResponse response){
+        return userService.toTokenCheck(request,response) ? "user" : "login";
     }
 
     /**
@@ -51,8 +54,8 @@ public class PageController {
      * @return feeding.html
      */
     @GetMapping("/feeding")
-    public String toFeeding(@Valid TokenCheckDto dto){
-        return userService.toTokenCheck(dto) ? "feeding" : "login";
+    public String toFeeding(HttpServletRequest request, HttpServletResponse response){
+        return userService.toTokenCheck(request,response) ? "feeding" : "login";
     }
 
     /**
@@ -60,8 +63,8 @@ public class PageController {
      * @return transaction.html
      */
     @GetMapping("/transaction")
-    public String toTransaction(@Valid TokenCheckDto dto){
-        return userService.toTokenCheck(dto) ? "transaction" : "login";
+    public String toTransaction(HttpServletRequest request, HttpServletResponse response){
+        return userService.toTokenCheck(request,response) ? "transaction" : "login";
     }
 
     /**
@@ -69,7 +72,7 @@ public class PageController {
      * @return vaccine.html
      */
     @GetMapping("/vaccine")
-    public String toVaccine(@Valid TokenCheckDto dto){
-        return userService.toTokenCheck(dto) ? "vaccine" : "login";
+    public String toVaccine(HttpServletRequest request, HttpServletResponse response){
+        return userService.toTokenCheck(request,response) ? "vaccine" : "login";
     }
 }

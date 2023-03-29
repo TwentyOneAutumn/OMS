@@ -39,7 +39,7 @@ public class OmsDetailController{
      * @return AjaxResult
      */
     @GetMapping("/detail")
-    public Row<DetailDetailVo> toDetail(@Valid @RequestBody DetailDetailDto dto){
+    public Row<DetailDetailVo> toDetail(@Valid DetailDetailDto dto){
         return detailService.toDetail(dto);
     }
 
@@ -61,7 +61,7 @@ public class OmsDetailController{
      * @param dto 数据对象
      * @return AjaxResult
      */
-    @GetMapping("/edit")
+    @PutMapping("/edit")
     public AjaxResult toEdit(@Valid @RequestBody DetailEditDto dto){
         return detailService.toEdit(dto);
     }

@@ -18,12 +18,13 @@
 
 <body>
 
+<!-- 导航栏 -->
 <nav class="topnav navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
 	<div class="container-fluid">
 		<div class="navbar-collapse collapse" id="navbarColor02" style="">
 			<ul class="navbar-nav mr-auto d-flex align-items-center">
 				<li class="nav-item">
-					<a class="nav-link" @click="toList"><strong>详情</strong></a>
+					<a class="nav-link" @click="toIndex"><strong>详情</strong></a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" @click="toFeeding"><strong>饲养</strong></a>
@@ -42,6 +43,7 @@
 	</div>
 </nav>
 
+<!-- 头部 -->
 <header>
 	<div class="jumbotron jumbotron-lg jumbotron-fluid mb-0 pb-5 bg-primary position-relative">
 		<div class="container-fluid text-white h-100">
@@ -57,6 +59,7 @@
     </svg>
 </header>
 
+<!-- 主体 -->
 <main class="container">
 	<section class="pt-4 pb-5 " data-aos="fade-up">
 		<div id="omsVueApp">
@@ -97,7 +100,7 @@
 					</td>
 					<td>
 						<button type="button" class="btn btn-success btn-round" @click="toList">查询</button>
-						<button type="button" class="btn btn-success btn-round" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" >新增</button>
+						<button type="button" class="btn btn-success btn-round" data-toggle="modal" data-target="#addDetail">新增</button>
 					</td>
 				</tr>
 				</tbody>
@@ -123,6 +126,9 @@
 					<th scope="col">
 						入库时间
 					</th>
+					<th scope="col">
+						操作
+					</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -145,6 +151,10 @@
 						<td>
 							{{item.startTime}}
 						</td>
+						<td>
+							<button type="button" class="btn btn-success btn-round" @click="toDetail(item.id)" data-toggle="modal" data-target="#editDetail">修改</button>
+							<button type="button" class="btn btn-success btn-round" @click="toDelete(item.id)" data-toggle="modal" data-target="#deleteDetail">删除</button>
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -157,7 +167,8 @@
 					<li class="page-item"><i class="fas fa-angle-right"></i></a></li>
 				</ul>
 			</nav>
-			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<!-- 新增模态框 -->
+			<div class="modal fade" id="addDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -167,35 +178,104 @@
 							</button>
 						</div>
 						<div class="modal-body">
-							<form>
-								<table class="table text-center" style="margin-bottom: -30px">
-									<tbody>
-									<tr>
-										<td>
-											<label for="variety" class="col-form-label">品种:</label>
-										</td>
-										<td>
-											<input type="text" class="form-control" id="variety" v-model="addVriety">
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<label for="source" class="col-form-label">来源:</label>
-										</td>
-										<td>
-											<input type="text" class="form-control" id="source" v-model="addSource">
-										</td>
-									</tr>
-									</tbody>
-								</table>
-								<div class="form-group">
-								</div>
-								<div class="form-group">
-								</div>
-							</form>
+							<table class="table text-center" style="margin-bottom: -30px">
+								<tbody>
+								<tr>
+									<td>
+										<label for="variety" class="col-form-label">品种:</label>
+									</td>
+									<td>
+										<input type="text" class="form-control" id="variety" v-model="addVriety">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="source" class="col-form-label">来源:</label>
+									</td>
+									<td>
+										<input type="text" class="form-control" id="source" v-model="addSource">
+									</td>
+								</tr>
+								</tbody>
+							</table>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-primary" @click="toAdd">Send</button>
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 修改模态框 -->
+			<div class="modal fade" id="editDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel2">修改养殖详情</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<table class="table text-center" style="margin-bottom: -30px">
+								<tbody>
+								<tr>
+									<td>
+										<label for="detailVriety" class="col-form-label">品种:</label>
+									</td>
+									<td>
+										<input type="text" class="form-control" id="detailVriety" v-model="detailVriety">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="detailSource" class="col-form-label">来源:</label>
+									</td>
+									<td>
+										<input type="text" class="form-control" id="detailSource" v-model="detailSource">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="detailStartTime" class="col-form-label">入库时间:</label>
+									</td>
+									<td>
+										<input type="date" class="form-control" id="detailStartTime" v-model="detailStartTime" disabled="disabled">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="detailEndTime" class="col-form-label">出库时间:</label>
+									</td>
+									<td>
+										<input type="date" class="form-control" id="detailEndTime" v-model="detailEndTime">
+									</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" @click="toEdit">Update</button>
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 删除模态框 -->
+			<div class="modal fade" id="deleteDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel3">删除养殖详情</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<h3>是否要删除该数据？</h3>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" @click="toDelete(undefined)">Delete</button>
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 						</div>
 					</div>
@@ -279,16 +359,15 @@ FOOTER
 			pageNum : 1,
 			addVriety : '',
 			addSource : '',
-			startTime : '',
-			endTime : ''
+			detailId : '',
+			detailVriety : '',
+			detailSource : '',
+			detailStartTime : '',
+			detailEndTime : '',
+			deleteId : ''
 		},
 		methods : {
-			toList(pageNum) {
-				if(pageNum === undefined){
-					this.pageNum = 1
-				}else {
-					this.pageNum = pageNum
-				}
+			toList() {
 				axios({
 					method: 'get',
 					url: '/detail/list',
@@ -302,7 +381,7 @@ FOOTER
 				})
 				.then(this.listInit)
 				.catch(function (error) {
-					alert(error)
+					alert("系统异常: " + error);
 				});
 			},
 			listInit(response){
@@ -310,9 +389,8 @@ FOOTER
 					this.list = response.data.collection;
 					this.total = response.data.total;
 					this.pageList = [];
-					const num = parseInt((this.total%100)/10);
-					for (i = 1; i <= num+1; i++) {
-						this.pageList.push(i)
+					for (i = 1; i <= response.data.total; i++) {
+						this.pageList.push(i);
 					}
 				}
 			},
@@ -328,10 +406,6 @@ FOOTER
 				axios({
 					method: 'post',
 					url: '/detail/add',
-					params: {
-						variety: this.addVriety,
-						source: this.addSource
-					},
 					data: {
 						variety: this.addVriety,
 						source: this.addSource
@@ -339,14 +413,105 @@ FOOTER
 				})
 				.then(this.addInit)
 				.catch(function (error) {
-					alert(error)
+					alert("系统异常: " + error);
 				});
 			},
 			addInit(response){
 				if(response.data.code === 200 ){
-					document.getElementById("exampleModal").click();
+					this.addVriety = '';
+					this.addSource = '';
+					document.getElementById("addDetail").click();
 					this.toList();
+					alert("新增成功");
 				}
+			},
+			toDetail(id){
+				axios({
+					method: 'get',
+					url: '/detail/detail',
+					params: {
+						id: id
+					}
+				})
+				.then(this.detailInit)
+				.catch(function (error) {
+					alert("系统异常: " + error);
+				});
+			},
+			detailInit(response){
+				if(response.data.code === 200 ){
+					this.detailId = response.data.row.id;
+					this.detailVriety = response.data.row.variety;
+					this.detailSource = response.data.row.source;
+					this.detailStartTime = response.data.row.startTime;
+					this.detailEndTime = response.data.row.endTime;
+				}
+			},
+			toEdit(){
+				axios({
+					method: 'put',
+					url: '/detail/edit',
+					data: {
+						id : this.detailId,
+						variety : this.detailVriety,
+						source : this.detailSource,
+						endTime : this.detailEndTime
+					}
+				})
+				.then(this.editInit)
+				.catch(function (error) {
+					alert("系统异常: " + error);
+				});
+			},
+			editInit(response){
+				if(response.data.code === 200 ){
+					this.detailId = '';
+					this.detailVriety = '';
+					this.detailSource = '';
+					this.detailEndTime = '';
+					this.toList();
+					document.getElementById("editDetail").click();
+					alert("修改成功");
+				}
+			},
+			toDelete(detailId){
+				if(detailId === undefined){
+					axios({
+						method: 'delete',
+						url: '/detail/delete',
+						data: {
+							id: this.detailId
+						}
+					})
+					.then(this.deleteInit)
+					.catch(function (error) {
+						alert("系统异常: " + error);
+					});
+				}else {
+					this.detailId = detailId;
+				}
+			},
+			deleteInit(response){
+				if(response.data.code === 200 ){
+					this.toList();
+					document.getElementById("deleteDetail").click();
+					alert("删除成功");
+				}
+			},
+			toIndex(){
+				window.location.href = 'http://localhost:8801/page/index?token=' + response.data.row + "&account=" + this.account;
+			},
+			toFeeding(){
+				window.location.href = 'http://localhost:8801/page/feeding?token=' + response.data.row + "&account=" + this.account;
+			},
+			toVaccine(){
+				window.location.href = 'http://localhost:8801/page/vaccine?token=' + response.data.row + "&account=" + this.account;
+			},
+			toTransaction(){
+				window.location.href = 'http://localhost:8801/page/transaction?token=' + response.data.row + "&account=" + this.account;
+			},
+			toUser(){
+				window.location.href = 'http://localhost:8801/page/user?token=' + response.data.row + "&account=" + this.account;
 			}
 		},
 		created:function () {

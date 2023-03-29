@@ -56,6 +56,7 @@ public class OmsDetailServiceImpl extends ServiceImpl<OmsDetailMapper, OmsDetail
             // 处理饲养状态
             vo.setIsFeeding(true);
         });
+        int pages = page.getPages();
         return Build.buildTable(page.getPages(),voList);
     }
 
