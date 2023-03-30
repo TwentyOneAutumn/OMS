@@ -13,7 +13,7 @@ public class CookieUtils {
     public static String get(HttpServletRequest request,String key){
         Map<String, String> map = new HashMap<>();
         Cookie[] cookies = request.getCookies();
-        if(ArrayUtil.isNotEmpty(cookies)){
+        if(ArrayUtil.isEmpty(cookies)){
             return null;
         }else {
             for (Cookie cookie : cookies) {

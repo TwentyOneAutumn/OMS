@@ -37,7 +37,8 @@ public class PageController {
      */
     @GetMapping("/index")
     public String toIndex(HttpServletRequest request, HttpServletResponse response){
-        return userService.toTokenCheck(request,response) ? "index" : "login";
+        boolean check = userService.toTokenCheck(request, response);
+        return check ? "index" : "login";
     }
 
     /**

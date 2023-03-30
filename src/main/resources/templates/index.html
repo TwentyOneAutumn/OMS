@@ -17,7 +17,7 @@
 </head>
 
 <body>
-
+<div id="app">
 <!-- 导航栏 -->
 <nav class="topnav navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
 	<div class="container-fluid">
@@ -42,6 +42,7 @@
 		</div>
 	</div>
 </nav>
+</div>
 
 <!-- 头部 -->
 <header>
@@ -499,23 +500,44 @@ FOOTER
 				}
 			},
 			toIndex(){
-				window.location.href = 'http://localhost:8801/page/index?token=' + response.data.row + "&account=" + this.account;
+				window.location.href = 'http://localhost:8801/page/index';
 			},
 			toFeeding(){
-				window.location.href = 'http://localhost:8801/page/feeding?token=' + response.data.row + "&account=" + this.account;
+				window.location.href = 'http://localhost:8801/page/feeding';
 			},
 			toVaccine(){
-				window.location.href = 'http://localhost:8801/page/vaccine?token=' + response.data.row + "&account=" + this.account;
+				window.location.href = 'http://localhost:8801/page/vaccine';
 			},
 			toTransaction(){
-				window.location.href = 'http://localhost:8801/page/transaction?token=' + response.data.row + "&account=" + this.account;
+				window.location.href = 'http://localhost:8801/page/transaction';
 			},
 			toUser(){
-				window.location.href = 'http://localhost:8801/page/user?token=' + response.data.row + "&account=" + this.account;
+				window.location.href = 'http://localhost:8801/page/user';
 			}
 		},
 		created:function () {
 			this.toList();
+		}
+	});
+
+	new Vue({
+		el: '#app',
+		methods : {
+			toIndex(){
+				window.location.href = 'http://localhost:8801/page/index';
+			},
+			toFeeding(){
+				window.location.href = 'http://localhost:8801/page/feeding';
+			},
+			toVaccine(){
+				window.location.href = 'http://localhost:8801/page/vaccine';
+			},
+			toTransaction(){
+				window.location.href = 'http://localhost:8801/page/transaction';
+			},
+			toUser(){
+				window.location.href = 'http://localhost:8801/page/user';
+			}
 		}
 	});
 </script>

@@ -86,17 +86,18 @@
 				})
 				.then(this.loginInit)
 				.catch(function (error) {
-					window.location.href = 'http://localhost:8801/page/error?errorMsg=' + error;
+					alert("系统异常: " + error);
 				});
 			},
 			loginInit(response){
 				if(response.data.code === 200 ){
-					var request = new XMLHttpRequest();
-					request.open('GET', document.location, false);
-					request.setRequestHeader("token",response.data.row);
-					request.setRequestHeader("account",this.account);
-					window.location.href = 'http://localhost:8801/page/index';
+					this.jumpToPage('GET','index',response.headers.token,response.headers.account);
 				}
+			},
+			jumpToPage(method,url,token,account){
+				document.cookie = 'token=' + token;
+				document.cookie = 'account=' + account;
+				window.location.href = 'http://localhost:8801/page/' + url;
 			}
 		}
 	});
