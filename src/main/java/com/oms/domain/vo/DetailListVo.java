@@ -14,6 +14,11 @@ public class DetailListVo implements Serializable {
     private String id;
 
     /**
+     * 批次
+     */
+    private Integer batchNum;
+
+    /**
      * 品种
      */
     private String variety;

@@ -4,13 +4,14 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.oms.domain.AjaxResult;
-import com.oms.domain.OmsFeeding;
-import com.oms.domain.Row;
+import com.oms.domain.*;
 import com.oms.domain.dto.*;
 import com.oms.domain.vo.*;
 import com.oms.mapper.OmsFeedingMapper;
+import com.oms.service.IOmsDetailService;
 import com.oms.service.IOmsFeedingService;
+import com.oms.service.IOmsUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -20,36 +21,29 @@ import java.util.List;
 @Service
 public class OmsFeedingServiceImpl extends ServiceImpl<OmsFeedingMapper, OmsFeeding> implements IOmsFeedingService {
 
+    @Autowired
+    IOmsDetailService detailService;
+
+    @Autowired
+    IOmsUserService userService;
+
     /**
      * 根据条件查询列表
      *
-     * @param dto 数据对象
      * @return TableInfo
      */
     @Override
-    public List<FeedingListVo> toList(FeedingListDto dto) {
-//        LambdaQueryWrapper<OmsFeeding> wrapper = new LambdaQueryWrapper<OmsFeeding>()
-//                .isNotNull(OmsFeeding::getVaccineId);
-//        String variety = dto.getVariety();
-//        String source = dto.getSource();
-//        if(StrUtil.isNotEmpty(variety)){
-//            wrapper.like(OmsFeeding::getVariety,variety);
-//        }
-//        if(StrUtil.isNotEmpty(source)){
-//            wrapper.like(OmsFeeding::getVariety,source);
-//        }
-//        List<OmsFeeding> list = list(wrapper);
-//        List<DetailListVo> voList = BeanUtil.copyToList(list, DetailListVo.class);
-//        voList.forEach(vo -> {
-//            // 处理购买价格
-//            vo.setBuyingPrice(89);
-//            // 处理疫苗状态
-//            vo.setIsVaccine(true);
-//            // 处理饲养状态
-//            vo.setIsFeeding(true);
-//        });
-//        return voList;
-        return null;
+    public List<FeedingListVo> toList() {
+        List<FeedingListVo> voList = BeanUtil.copyToList(list(), FeedingListVo.class);
+        voList.forEach(vo -> {
+            OmsDetail detail = detailService.getById(vo.getDetailId());
+            if(BeanUtil.isNotEmpty(detail)){
+                vo.setBatchNum(detail.getBatchNum());
+                vo.setVariety(detail.getVariety());
+                vo.setSource(detail.getSource());
+            }
+        });
+        return voList;
     }
 
     /**
@@ -75,7 +69,22 @@ public class OmsFeedingServiceImpl extends ServiceImpl<OmsFeedingMapper, OmsFeed
      */
     @Override
     public AjaxResult toAdd(FeedingAddDto dto) {
+        OmsUser user = userService.getOne(new LambdaQueryWrapper<OmsUser>()
+                .eq(OmsUser::getUserName, dto.getResponsiblePersonName())
+        );
+        if(BeanUtil.isEmpty(user)){
+            return AjaxResult.error("该用户不存在");
+        }
+        OmsDetail detail = detailService.getOne(new LambdaQueryWrapper<OmsDetail>()
+                .eq(OmsDetail::getBatchNum, dto.getBatchNum())
+        );
+        if(BeanUtil.isEmpty(detail)){
+            return AjaxResult.error("该批次不存在");
+        }
         OmsFeeding pojo = BeanUtil.toBean(dto, OmsFeeding.class);
+        pojo.setDetailId(detail.getId());
+        pojo.setResponsiblePersonId(user.getUserId());
+        pojo.setResponsiblePersonName(user.getUserName());
         return save(pojo) ? AjaxResult.success() : AjaxResult.error();
     }
 

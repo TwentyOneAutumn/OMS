@@ -27,6 +27,11 @@ public class OmsVaccine  extends BaseEntitys implements Serializable {
     private String id;
 
     /**
+     * 详情ID
+     */
+    private String detailId;
+
+    /**
      * 疫苗名称
      */
     private String vaccineName;

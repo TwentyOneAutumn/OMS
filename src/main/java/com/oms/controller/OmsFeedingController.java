@@ -8,14 +8,15 @@ import com.oms.domain.dto.*;
 import com.oms.domain.vo.*;
 import com.oms.service.IOmsFeedingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 
 /**
  * 饲养Controller
  */
+@RestController
+@RequestMapping("/feeding")
 public class OmsFeedingController {
 
     @Autowired
@@ -24,12 +25,11 @@ public class OmsFeedingController {
     /**
      * 根据条件查询列表
      *
-     * @param dto 数据对象
      * @return TableInfo
      */
     @GetMapping("/list")
-    public TableInfo<FeedingListVo> toList(@Valid FeedingListDto dto){
-        return Build.buildTable(feedingService.toList(dto));
+    public TableInfo<FeedingListVo> toList(){
+        return Build.buildTable(feedingService.toList());
     }
 
     /**
@@ -49,7 +49,7 @@ public class OmsFeedingController {
      * @param dto 数据对象
      * @return AjaxResult
      */
-    @GetMapping("/add")
+    @PostMapping("/add")
     public AjaxResult toAdd(@Valid @RequestBody FeedingAddDto dto){
         return feedingService.toAdd(dto);
     }
@@ -61,7 +61,7 @@ public class OmsFeedingController {
      * @param dto 数据对象
      * @return AjaxResult
      */
-    @GetMapping("/edit")
+    @PutMapping("/edit")
     public AjaxResult toEdit(@Valid @RequestBody FeedingEditDto dto){
         return feedingService.toEdit(dto);
     }

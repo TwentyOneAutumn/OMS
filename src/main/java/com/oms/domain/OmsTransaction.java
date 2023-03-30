@@ -27,14 +27,19 @@ public class OmsTransaction extends BaseEntitys implements Serializable {
     private String id;
 
     /**
+     * 详情ID
+     */
+    private String detailId;
+
+    /**
      * 交易数量
      */
-    private String transactionNumber;
+    private Integer transactionNumber;
 
     /**
      * 交易价格
      */
-    private String transactionPrice;
+    private Integer transactionPrice;
 
     /**
      * 交易时间

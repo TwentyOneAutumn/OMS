@@ -17,10 +17,9 @@ public interface IOmsFeedingService extends IService<OmsFeeding> {
     /**
      * 根据条件查询列表
      *
-     * @param dto 数据对象
      * @return TableInfo
      */
-    List<FeedingListVo> toList(FeedingListDto dto);
+    List<FeedingListVo> toList();
 
     /**
      * 明细

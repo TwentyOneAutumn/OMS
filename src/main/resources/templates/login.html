@@ -91,13 +91,10 @@
 			},
 			loginInit(response){
 				if(response.data.code === 200 ){
-					this.jumpToPage('GET','index',response.headers.token,response.headers.account);
+					document.cookie = 'token=' + response.headers.token;
+					document.cookie = 'account=' + response.headers.account;
+					window.location.href = 'http://localhost:8801/page/index';
 				}
-			},
-			jumpToPage(method,url,token,account){
-				document.cookie = 'token=' + token;
-				document.cookie = 'account=' + account;
-				window.location.href = 'http://localhost:8801/page/' + url;
 			}
 		}
 	});

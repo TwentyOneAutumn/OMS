@@ -7,15 +7,15 @@ import com.oms.domain.dto.*;
 import com.oms.domain.vo.*;
 import com.oms.service.IOmsTransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 /**
  * 交易Controller
  */
+@RestController
+@RequestMapping("/transaction")
 public class OmsTransactionController {
 
     @Autowired

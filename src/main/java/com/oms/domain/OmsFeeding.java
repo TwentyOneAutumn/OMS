@@ -27,9 +27,9 @@ public class OmsFeeding extends BaseEntitys implements Serializable {
     private String id;
 
     /**
-     * 品种
+     * 详情ID
      */
-    private String variety;
+    private String detailId;
 
     /**
      * 饲养频率

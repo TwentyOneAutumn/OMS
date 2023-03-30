@@ -13,13 +13,15 @@ import com.oms.domain.vo.DetailDetailVo;
 import com.oms.domain.vo.DetailListVo;
 import com.oms.mapper.OmsDetailMapper;
 import com.oms.mapper.OmsUserMapper;
-import com.oms.service.IOmsDetailService;
-import com.oms.service.IOmsUserService;
+import com.oms.service.*;
 import com.oms.utils.JwtUtil;
+import com.oms.utils.StreamUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -27,6 +29,15 @@ import java.util.List;
  */
 @Service
 public class OmsDetailServiceImpl extends ServiceImpl<OmsDetailMapper, OmsDetail> implements IOmsDetailService {
+
+    @Autowired
+    private IOmsFeedingService feedingService;
+
+    @Autowired
+    private IOmsTransactionService transactionService;
+
+    @Autowired
+    private IOmsVaccineService vaccineService;
 
     /**
      * 根据条件查询列表
@@ -50,13 +61,13 @@ public class OmsDetailServiceImpl extends ServiceImpl<OmsDetailMapper, OmsDetail
         List<DetailListVo> voList = BeanUtil.copyToList(list, DetailListVo.class);
         voList.forEach(vo -> {
             // 处理购买价格
-            vo.setBuyingPrice(89);
+            OmsTransaction transaction = transactionService.getOne(new LambdaQueryWrapper<OmsTransaction>().eq(OmsTransaction::getDetailId, vo.getId()));
+            vo.setBuyingPrice(BeanUtil.isEmpty(transaction) ? 0 : transaction.getTransactionPrice());
             // 处理疫苗状态
-            vo.setIsVaccine(true);
+            vo.setIsVaccine(vaccineService.count(new LambdaQueryWrapper<OmsVaccine>().eq(OmsVaccine::getDetailId,vo.getId())) > 0);
             // 处理饲养状态
-            vo.setIsFeeding(true);
+            vo.setIsFeeding(feedingService.count(new LambdaQueryWrapper<OmsFeeding>().eq(OmsFeeding::getDetailId,vo.getId())) > 0);
         });
-        int pages = page.getPages();
         return Build.buildTable(page.getPages(),voList);
     }
 
@@ -85,6 +96,8 @@ public class OmsDetailServiceImpl extends ServiceImpl<OmsDetailMapper, OmsDetail
     public AjaxResult toAdd(DetailAddDto dto) {
         OmsDetail pojo = BeanUtil.toBean(dto, OmsDetail.class);
         pojo.setStartTime(LocalDate.now());
+        Integer batchNum = StreamUtils.max(list(), Comparator.comparing(OmsDetail::getBatchNum)).getBatchNum();
+        pojo.setBatchNum(BeanUtil.isNotEmpty(batchNum) ? batchNum + 1 : 1);
         return save(pojo) ? AjaxResult.success() : AjaxResult.error();
     }
 

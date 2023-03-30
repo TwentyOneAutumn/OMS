@@ -27,19 +27,9 @@ public class OmsDetail extends BaseEntitys implements Serializable {
     private String id;
 
     /**
-     * 疫苗表ID
+     * 批次
      */
-    private String vaccineId;
-
-    /**
-     * 交易表ID
-     */
-    private String transactionId;
-
-    /**
-     * 饲养表ID
-     */
-    private String feedingId;
+    private Integer batchNum;
 
     /**
      * 品种
