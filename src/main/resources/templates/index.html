@@ -103,7 +103,7 @@
 						</div>
 					</td>
 					<td>
-						<button type="button" class="btn btn-success btn-round" @click="toList">查询</button>
+						<button type="button" class="btn btn-success btn-round" @click="toList(undefined)">查询</button>
 						<button type="button" class="btn btn-success btn-round" data-toggle="modal" data-target="#addDetail">新增</button>
 					</td>
 				</tr>
@@ -181,133 +181,142 @@
 					<li class="page-item"><i class="fas fa-angle-right"></i></a></li>
 				</ul>
 			</nav>
-
-			<!-- 新增模态框 -->
-			<div class="modal fade" id="addDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">新增养殖详情</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<table class="table text-center" style="margin-bottom: -30px">
-								<tbody>
-								<tr>
-									<td>
-										<label for="variety" class="col-form-label">品种:</label>
-									</td>
-									<td>
-										<input type="text" class="form-control" id="variety" v-model="addVriety">
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<label for="source" class="col-form-label">来源:</label>
-									</td>
-									<td>
-										<input type="text" class="form-control" id="source" v-model="addSource">
-									</td>
-								</tr>
-								</tbody>
-							</table>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-primary" @click="toAdd">Send</button>
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- 修改模态框 -->
-			<div class="modal fade" id="editDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel2">修改养殖详情</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<table class="table text-center" style="margin-bottom: -30px">
-								<tbody>
-								<tr>
-									<td>
-										<label for="detailVriety" class="col-form-label">批次:</label>
-									</td>
-									<td>
-										<input type="text" class="form-control" id="detailBatchNum" v-model="detailBatchNum" disabled="disabled">
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<label for="detailVriety" class="col-form-label">品种:</label>
-									</td>
-									<td>
-										<input type="text" class="form-control" id="detailVriety" v-model="detailVriety">
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<label for="detailSource" class="col-form-label">来源:</label>
-									</td>
-									<td>
-										<input type="text" class="form-control" id="detailSource" v-model="detailSource">
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<label for="detailStartTime" class="col-form-label">入库时间:</label>
-									</td>
-									<td>
-										<input type="date" class="form-control" id="detailStartTime" v-model="detailStartTime" disabled="disabled">
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<label for="detailEndTime" class="col-form-label">出库时间:</label>
-									</td>
-									<td>
-										<input type="date" class="form-control" id="detailEndTime" v-model="detailEndTime">
-									</td>
-								</tr>
-								</tbody>
-							</table>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-primary" @click="toEdit">Update</button>
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- 删除模态框 -->
-			<div class="modal fade" id="deleteDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel3">删除养殖详情</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<h3>是否要删除该数据？</h3>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-primary" @click="toDelete(undefined)">Delete</button>
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						</div>
-					</div>
-				</div>
-			</div>
 		</div>
 	</section>
 </main>
+<div id="modalApp">
+	<!-- 新增模态框 -->
+	<div class="modal fade" id="addDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">新增养殖详情</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<table class="table text-center" style="margin-bottom: -10px">
+						<tbody>
+						<tr>
+							<td>
+								<label for="variety" class="col-form-label">品种:</label>
+							</td>
+							<td>
+								<input type="text" class="form-control" id="variety" v-model="addVriety">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="source" class="col-form-label">来源:</label>
+							</td>
+							<td>
+								<input type="text" class="form-control" id="source" v-model="addSource">
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" @click="toAdd">Send</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
+	<!-- 修改模态框 -->
+	<div class="modal fade" id="editDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel2">修改养殖详情</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<table class="table text-center" style="margin-bottom: -10px">
+						<tbody>
+						<tr>
+							<td>
+								<label for="detailVriety" class="col-form-label">批次:</label>
+							</td>
+							<td>
+								<input type="text" class="form-control" id="detailBatchNum" v-model="detailBatchNum" disabled="disabled">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="detailVriety" class="col-form-label">品种:</label>
+							</td>
+							<td>
+								<input type="text" class="form-control" id="detailVriety" v-model="detailVriety">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="detailSource" class="col-form-label">来源:</label>
+							</td>
+							<td>
+								<input type="text" class="form-control" id="detailSource" v-model="detailSource">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="detailStartTime" class="col-form-label">入库时间:</label>
+							</td>
+							<td>
+								<input type="date" class="form-control" id="detailStartTime" v-model="detailStartTime" disabled="disabled">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="detailEndTime" class="col-form-label">出库时间:</label>
+							</td>
+							<td>
+								<input type="date" class="form-control" id="detailEndTime" v-model="detailEndTime">
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" @click="toEdit">Update</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 删除模态框 -->
+	<div class="modal fade" id="deleteDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content text-center">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel3">删除养殖详情</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<table class="table text-center" style="margin-bottom: -10px">
+					<tbody>
+					<tr>
+						<td>
+							<h5>是否要删除该数据？</h5>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" @click="toDelete(undefined)">Delete</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <!-- 页脚 -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewbox="0 0 1440 126" style="enable-background:new 0 0 1440 126;" xml:space="preserve">
 <path class="bg-black" d="M685.6,38.8C418.7-11.1,170.2,9.9,0,30v96h1440V30C1252.7,52.2,1010,99.4,685.6,38.8z"/>
@@ -363,25 +372,138 @@
 </script>
 
 <script>
-	axios.defaults.headers.post['Content-Type'] = 'application/json';
-	new Vue({
+	const vue = new Vue({
 		el: '#omsVueApp',
 		data: {
-			variety : '',
-			source : '',
-			isVaccine : true,
-			list : [{
-				id : '',
-				batchNum : 0,
-				variety : '',
-				source : '',
-				buyingPrice : 0,
-				isVaccine : false,
-				isFeeding : false,
+			variety: '',
+			source: '',
+			isVaccine: true,
+			list: [{
+				id: '',
+				batchNum: 0,
+				variety: '',
+				source: '',
+				buyingPrice: 0,
+				isVaccine: false,
+				isFeeding: false,
 			}],
-			total : 0,
-			pageList : [],
-			pageNum : 1,
+			total: 0,
+			pageList: [],
+			pageNum: 1
+		},
+		methods: {
+			toList(page) {
+				if(page === undefined){
+					this.pageNum = 1;
+				}else {
+					this.pageNum = page;
+				}
+				axios({
+					method: 'get',
+					url: '/detail/list',
+					params: {
+						variety: this.variety,
+						source: this.source,
+						isVaccine: this.isVaccine,
+						pageSize: 10,
+						pageNum: this.pageNum
+					}
+				})
+				.then(this.listInit)
+				.catch(function (error) {
+					alert("系统异常: " + error);
+				});
+			},
+			listInit(response) {
+				if (response.data.code === 200) {
+					this.list = response.data.collection;
+					this.total = response.data.total;
+					this.pageList = [];
+					for (i = 1; i <= response.data.total; i++) {
+						this.pageList.push(i);
+					}
+				}else {
+					alert("系统异常: " + response.data.msg);
+				}
+			},
+			isTrue() {
+				console.log(true)
+				this.isVaccine = true;
+			},
+			isFalse() {
+				console.log(false)
+				this.isVaccine = false;
+			},
+			refreshInit(){
+				this.variety = '';
+				this.source = '';
+				this.isVaccine = true;
+			},
+			toAdd(addVriety,addSource){
+				this.refreshInit();
+				axios({
+					method: 'post',
+					url: '/detail/add',
+					data: {
+						variety: addVriety,
+						source: addSource
+					}
+				})
+				.then(this.addInit)
+				.catch(function (error) {
+					alert("系统异常: " + error);
+				});
+			},
+			addInit(response){
+				if(response.data.code === 200 ){
+					document.getElementById("addDetail").click();
+					this.toList();
+					alert("新增成功");
+					vue2.addVriety = '';
+					vue2.addSource = '';
+				}else {
+					alert("系统异常: " + response.data.msg);
+				}
+			},
+			toDetail(id){
+				vue2.toDetail(id);
+			},
+			toDelete(detailId){
+				if(detailId === undefined){
+					axios({
+						method: 'delete',
+						url: '/detail/delete',
+						data: {
+							id: this.detailId
+						}
+					})
+					.then(this.deleteInit)
+					.catch(function (error) {
+						alert("系统异常: " + error);
+					});
+				}else {
+					this.detailId = detailId;
+				}
+			},
+			deleteInit(response){
+				if(response.data.code === 200 ){
+					this.refreshInit();
+					this.toList();
+					document.getElementById("deleteDetail").click();
+					alert("删除成功");
+				}else {
+					alert("系统异常: " + response.data.msg);
+				}
+			}
+		},
+		created: function () {
+			this.toList();
+		}
+	});
+
+	const vue2 = new Vue({
+		el: '#modalApp',
+		data: {
 			addVriety : '',
 			addSource : '',
 			detailId : '',
@@ -393,63 +515,8 @@
 			deleteId : ''
 		},
 		methods : {
-			toList() {
-				axios({
-					method: 'get',
-					url: '/detail/list',
-					params: {
-						variety: this.variety,
-						source: this.source,
-						isVaccine: this.isVaccine,
-						pageSize : 10,
-						pageNum : this.pageNum
-					}
-				})
-				.then(this.listInit)
-				.catch(function (error) {
-					alert("系统异常: " + error);
-				});
-			},
-			listInit(response){
-				if(response.data.code === 200 ){
-					this.list = response.data.collection;
-					this.total = response.data.total;
-					this.pageList = [];
-					for (i = 1; i <= response.data.total; i++) {
-						this.pageList.push(i);
-					}
-				}
-			},
-			isTrue(){
-				console.log(true)
-				this.isVaccine = true;
-			},
-			isFalse(){
-				console.log(false)
-				this.isVaccine = false;
-			},
 			toAdd(){
-				axios({
-					method: 'post',
-					url: '/detail/add',
-					data: {
-						variety: this.addVriety,
-						source: this.addSource
-					}
-				})
-				.then(this.addInit)
-				.catch(function (error) {
-					alert("系统异常: " + error);
-				});
-			},
-			addInit(response){
-				if(response.data.code === 200 ){
-					this.addVriety = '';
-					this.addSource = '';
-					document.getElementById("addDetail").click();
-					this.toList();
-					alert("新增成功");
-				}
+				vue.toAdd(this.addVriety,this.addSource)
 			},
 			toDetail(id){
 				axios({
@@ -472,6 +539,8 @@
 					this.detailSource = response.data.row.source;
 					this.detailStartTime = response.data.row.startTime;
 					this.detailEndTime = response.data.row.endTime;
+				}else {
+					alert("系统异常: " + response.data.msg);
 				}
 			},
 			toEdit(){
@@ -496,55 +565,20 @@
 					this.detailVriety = '';
 					this.detailSource = '';
 					this.detailEndTime = '';
-					this.toList();
+					vue.refreshInit();
+					vue.toList();
 					document.getElementById("editDetail").click();
 					alert("修改成功");
-				}
-			},
-			toDelete(detailId){
-				if(detailId === undefined){
-					axios({
-						method: 'delete',
-						url: '/detail/delete',
-						data: {
-							id: this.detailId
-						}
-					})
-					.then(this.deleteInit)
-					.catch(function (error) {
-						alert("系统异常: " + error);
-					});
 				}else {
-					this.detailId = detailId;
+					alert("系统异常: " + response.data.msg);
 				}
 			},
-			deleteInit(response){
-				if(response.data.code === 200 ){
-					this.toList();
-					document.getElementById("deleteDetail").click();
-					alert("删除成功");
-				}
-			},
-			toIndex(){
-				window.location.href = 'http://localhost:8801/page/index';
-			},
-			toFeeding(){
-				window.location.href = 'http://localhost:8801/page/feeding';
-			},
-			toVaccine(){
-				window.location.href = 'http://localhost:8801/page/vaccine';
-			},
-			toTransaction(){
-				window.location.href = 'http://localhost:8801/page/transaction';
-			},
-			toUser(){
-				window.location.href = 'http://localhost:8801/page/user';
+			toDelete(id){
+				vue.toDelete(id);
 			}
-		},
-		created:function () {
-			this.toList();
 		}
 	});
+
 	new Vue({
 		el: "#navApp",
 		methods: {
