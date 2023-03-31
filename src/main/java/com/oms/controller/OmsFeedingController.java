@@ -39,7 +39,7 @@ public class OmsFeedingController {
      * @return AjaxResult
      */
     @GetMapping("/detail")
-    public Row<FeedingDetailVo> toDetail(@Valid @RequestBody FeedingDetailDto dto){
+    public Row<FeedingDetailVo> toDetail(@Valid FeedingDetailDto dto){
         return feedingService.toDetail(dto);
     }
 

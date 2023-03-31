@@ -81,7 +81,7 @@ public class OmsDetailServiceImpl extends ServiceImpl<OmsDetailMapper, OmsDetail
     public Row<DetailDetailVo> toDetail(DetailDetailDto dto) {
         OmsDetail pojo = getById(dto.getId());
         if(BeanUtil.isEmpty(pojo)){
-            throw new RuntimeException("数据不存在");
+            return Build.buildRow(false,"数据不存在");
         }
         return Row.success(BeanUtil.toBean(pojo,DetailDetailVo.class));
     }
@@ -128,6 +128,19 @@ public class OmsDetailServiceImpl extends ServiceImpl<OmsDetailMapper, OmsDetail
         if(BeanUtil.isEmpty(getById(id))){
             throw new RuntimeException("数据不存在");
         }
-        return removeById(id) ? AjaxResult.success() : AjaxResult.error();
+        if(removeById(id)){
+            feedingService.remove(new LambdaQueryWrapper<OmsFeeding>()
+                    .eq(OmsFeeding::getDetailId,id)
+            );
+            transactionService.remove(new LambdaQueryWrapper<OmsTransaction>()
+                    .eq(OmsTransaction::getDetailId,id)
+            );
+            vaccineService.remove(new LambdaQueryWrapper<OmsVaccine>()
+                    .eq(OmsVaccine::getDetailId,id)
+            );
+            return AjaxResult.success();
+        }else {
+            return AjaxResult.error();
+        }
     }
 }

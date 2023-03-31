@@ -18,8 +18,8 @@
 </style>
 
 <body>
+<!-- 导航栏 -->
 <div id="navApp">
-	<!-- 导航栏 -->
 	<nav class="topnav navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-collapse collapse" id="navbarColor02" style="">
@@ -43,28 +43,29 @@
 			</div>
 		</div>
 	</nav>
+</div>
 
-	<!-- 头部 -->
-	<header>
-		<div class="jumbotron jumbotron-lg jumbotron-fluid mb-0 pb-5 bg-primary position-relative">
-			<div class="container-fluid text-white h-100">
-				<div class="d-lg-flex align-items-center justify-content-between text-center pl-lg-5">
-					<div class="col pt-12 pb-12">
-						<h1 class="display-3"><strong>OMS养殖管理系统</strong></h1>
-					</div>
+<!-- 头部 -->
+<header>
+	<div class="jumbotron jumbotron-lg jumbotron-fluid mb-0 pb-5 bg-primary position-relative">
+		<div class="container-fluid text-white h-100">
+			<div class="d-lg-flex align-items-center justify-content-between text-center pl-lg-5">
+				<div class="col pt-12 pb-12">
+					<h1 class="display-3"><strong>OMS养殖管理系统</strong></h1>
+					<h4 class="display-5" style="margin-top: 30px"><strong>详情管理界面</strong></h4>
 				</div>
 			</div>
 		</div>
-		<svg style="-webkit-transform:rotate(-180deg); -moz-transform:rotate(-180deg); -o-transform:rotate(-180deg); transform:rotate(-180deg); margin-top: -1px;" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1440 126" xml:space="preserve">
+	</div>
+	<svg style="-webkit-transform:rotate(-180deg); -moz-transform:rotate(-180deg); -o-transform:rotate(-180deg); transform:rotate(-180deg); margin-top: -1px;" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1440 126" xml:space="preserve">
     <path class="bg-primary" d="M685.6,38.8C418.7-11.1,170.2,9.9,0,30v96h1440V30C1252.7,52.2,1010,99.4,685.6,38.8z"></path>
     </svg>
-	</header>
-</div>
+</header>
+
 <!-- 主体 -->
 <main class="container">
 	<section class="pt-4 pb-5 " data-aos="fade-up">
-		<div id="omsVueApp">
-
+		<div id="mainApp">
 
 			<!-- 条件栏 -->
 			<table class="table text-center" style="margin-bottom:0;margin-top: 100px">
@@ -184,6 +185,8 @@
 		</div>
 	</section>
 </main>
+
+<!-- 模态框 -->
 <div id="modalApp">
 	<!-- 新增模态框 -->
 	<div class="modal fade" id="addDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -372,8 +375,8 @@
 </script>
 
 <script>
-	const vue = new Vue({
-		el: '#omsVueApp',
+	const mainApp = new Vue({
+		el: '#mainApp',
 		data: {
 			variety: '',
 			source: '',
@@ -409,10 +412,10 @@
 						pageNum: this.pageNum
 					}
 				})
-				.then(this.listInit)
-				.catch(function (error) {
-					alert("系统异常: " + error);
-				});
+						.then(this.listInit)
+						.catch(function (error) {
+							alert("系统异常: " + error);
+						});
 			},
 			listInit(response) {
 				if (response.data.code === 200) {
@@ -459,17 +462,17 @@
 					document.getElementById("addDetail").click();
 					this.toList();
 					alert("新增成功");
-					vue2.addVriety = '';
-					vue2.addSource = '';
+					modalApp.addVriety = '';
+					modalApp.addSource = '';
 				}else {
 					alert("系统异常: " + response.data.msg);
 				}
 			},
 			toDetail(id){
-				vue2.toDetail(id);
+				modalApp.toDetail(id);
 			},
-			toDelete(detailId){
-				if(detailId === undefined){
+			toDelete(id){
+				if(id === undefined){
 					axios({
 						method: 'delete',
 						url: '/detail/delete',
@@ -477,12 +480,12 @@
 							id: this.detailId
 						}
 					})
-					.then(this.deleteInit)
-					.catch(function (error) {
-						alert("系统异常: " + error);
-					});
+							.then(this.deleteInit)
+							.catch(function (error) {
+								alert("系统异常: " + error);
+							});
 				}else {
-					this.detailId = detailId;
+					this.detailId = id;
 				}
 			},
 			deleteInit(response){
@@ -501,7 +504,7 @@
 		}
 	});
 
-	const vue2 = new Vue({
+	const modalApp = new Vue({
 		el: '#modalApp',
 		data: {
 			addVriety : '',
@@ -516,7 +519,7 @@
 		},
 		methods : {
 			toAdd(){
-				vue.toAdd(this.addVriety,this.addSource)
+				mainApp.toAdd(this.addVriety,this.addSource)
 			},
 			toDetail(id){
 				axios({
@@ -526,10 +529,10 @@
 						id: id
 					}
 				})
-				.then(this.detailInit)
-				.catch(function (error) {
-					alert("系统异常: " + error);
-				});
+						.then(this.detailInit)
+						.catch(function (error) {
+							alert("系统异常: " + error);
+						});
 			},
 			detailInit(response){
 				if(response.data.code === 200 ){
@@ -554,10 +557,10 @@
 						endTime : this.detailEndTime
 					}
 				})
-				.then(this.editInit)
-				.catch(function (error) {
-					alert("系统异常: " + error);
-				});
+						.then(this.editInit)
+						.catch(function (error) {
+							alert("系统异常: " + error);
+						});
 			},
 			editInit(response){
 				if(response.data.code === 200 ){
@@ -565,8 +568,8 @@
 					this.detailVriety = '';
 					this.detailSource = '';
 					this.detailEndTime = '';
-					vue.refreshInit();
-					vue.toList();
+					mainApp.refreshInit();
+					mainApp.toList();
 					document.getElementById("editDetail").click();
 					alert("修改成功");
 				}else {
@@ -574,12 +577,12 @@
 				}
 			},
 			toDelete(id){
-				vue.toDelete(id);
+				mainApp.toDelete(id);
 			}
 		}
 	});
 
-	new Vue({
+	const navApp = new Vue({
 		el: "#navApp",
 		methods: {
 			toIndex(){

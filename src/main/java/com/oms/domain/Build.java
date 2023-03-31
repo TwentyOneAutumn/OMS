@@ -42,4 +42,14 @@ public class Build {
     public static <T> Row<T> buildRow(boolean flg){
         return flg ? new Row<T>(HttpStatus.SUCCESS,"操作成功",null) : new Row<T>(HttpStatus.ERROR,"操作失败",null);
     }
+
+    /**
+     * 构建Row
+     * @param flg 是否成功
+     * @param <T> 泛型
+     * @return Row
+     */
+    public static <T> Row<T> buildRow(boolean flg,String msg){
+        return flg ? new Row<T>(HttpStatus.SUCCESS,msg,null) : new Row<T>(HttpStatus.ERROR,msg,null);
+    }
 }

@@ -56,9 +56,14 @@ public class OmsFeedingServiceImpl extends ServiceImpl<OmsFeedingMapper, OmsFeed
     public Row<FeedingDetailVo> toDetail(FeedingDetailDto dto) {
         OmsFeeding pojo = getById(dto.getId());
         if(BeanUtil.isEmpty(pojo)){
-            throw new RuntimeException("数据不存在");
+            return Build.buildRow(false,"数据不存在");
         }
-        return Row.success(BeanUtil.toBean(pojo,FeedingDetailVo.class));
+        FeedingDetailVo vo = BeanUtil.copyProperties(pojo, FeedingDetailVo.class);
+        OmsDetail detail = detailService.getById(pojo.getDetailId());
+        vo.setBatchNum(detail.getBatchNum());
+        vo.setVariety(detail.getVariety());
+        vo.setSource(detail.getSource());
+        return Row.success(vo);
     }
 
     /**
