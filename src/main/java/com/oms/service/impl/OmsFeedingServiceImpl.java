@@ -4,6 +4,8 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.oms.domain.*;
 import com.oms.domain.dto.*;
 import com.oms.domain.vo.*;
@@ -33,7 +35,8 @@ public class OmsFeedingServiceImpl extends ServiceImpl<OmsFeedingMapper, OmsFeed
      * @return TableInfo
      */
     @Override
-    public List<FeedingListVo> toList() {
+    public TableInfo<FeedingListVo> toList(FeedingListDto dto) {
+        Page<Object> page = PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         List<FeedingListVo> voList = BeanUtil.copyToList(list(), FeedingListVo.class);
         voList.forEach(vo -> {
             OmsDetail detail = detailService.getById(vo.getDetailId());
@@ -43,7 +46,7 @@ public class OmsFeedingServiceImpl extends ServiceImpl<OmsFeedingMapper, OmsFeed
                 vo.setSource(detail.getSource());
             }
         });
-        return voList;
+        return Build.buildTable(page.getPages(),voList);
     }
 
     /**
@@ -102,7 +105,7 @@ public class OmsFeedingServiceImpl extends ServiceImpl<OmsFeedingMapper, OmsFeed
     @Override
     public AjaxResult toEdit(FeedingEditDto dto) {
         if(BeanUtil.isEmpty(getById(dto.getId()))){
-            throw new RuntimeException("数据不存在");
+            return AjaxResult.error("数据不存在");
         }
         OmsFeeding pojo = BeanUtil.toBean(dto, OmsFeeding.class);
         return updateById(pojo) ? AjaxResult.success() : AjaxResult.error();
@@ -118,7 +121,7 @@ public class OmsFeedingServiceImpl extends ServiceImpl<OmsFeedingMapper, OmsFeed
     public AjaxResult toDelete(FeedingDeleteDto dto) {
         String id = dto.getId();
         if(BeanUtil.isEmpty(getById(id))){
-            throw new RuntimeException("数据不存在");
+            return AjaxResult.error("数据不存在");
         }
         return removeById(id) ? AjaxResult.success() : AjaxResult.error();
     }

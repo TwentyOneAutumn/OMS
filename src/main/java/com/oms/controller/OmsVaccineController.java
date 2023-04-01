@@ -39,7 +39,7 @@ public class OmsVaccineController {
      * @return AjaxResult
      */
     @GetMapping("/detail")
-    public Row<VaccineDetailVo> toDetail(@Valid @RequestBody VaccineDetailDto dto){
+    public Row<VaccineDetailVo> toDetail(@Valid VaccineDetailDto dto){
         return vaccineService.toDetail(dto);
     }
 
@@ -49,11 +49,10 @@ public class OmsVaccineController {
      * @param dto 数据对象
      * @return AjaxResult
      */
-    @GetMapping("/add")
+    @PostMapping("/add")
     public AjaxResult toAdd(@Valid @RequestBody VaccineAddDto dto){
         return vaccineService.toAdd(dto);
     }
-
 
     /**
      * 修改
@@ -61,7 +60,7 @@ public class OmsVaccineController {
      * @param dto 数据对象
      * @return AjaxResult
      */
-    @GetMapping("/edit")
+    @PutMapping("/edit")
     public AjaxResult toEdit(@Valid @RequestBody VaccineEditDto dto){
         return vaccineService.toEdit(dto);
     }

@@ -41,14 +41,6 @@ public interface IOmsTransactionService extends IService<OmsTransaction> {
     AjaxResult toAdd(TransactionAddDto dto);
 
     /**
-     * 修改
-     *
-     * @param dto 数据对象
-     * @return AjaxResult
-     */
-    AjaxResult toEdit(TransactionEditDto dto);
-
-    /**
      * 删除
      *
      * @param dto 数据对象

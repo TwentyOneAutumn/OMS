@@ -47,17 +47,17 @@ public class OmsVaccine  extends BaseEntitys implements Serializable {
     private Integer vaccinePrice;
 
     /**
-     *
+     * 注射时间
      */
     private LocalDate injectTime;
 
     /**
-     *
+     * 负责人ID
      */
     private String responsiblePersonId;
 
     /**
-     *
+     * 负责人名称
      */
     private String responsiblePersonName;
 }

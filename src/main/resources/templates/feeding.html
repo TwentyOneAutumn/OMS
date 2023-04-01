@@ -5,7 +5,7 @@
 	<link rel="apple-touch-icon" sizes="76x76" th:href="@{/assets/img/favicon.ico}">
 	<link rel="icon" type="image/png" th:href="@{/assets/img/favicon.ico}">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-	<title>饲养</title>
+	<title>疫苗</title>
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport'/>
 
 	<!-- Main CSS -->
@@ -35,8 +35,8 @@
 					<li class="nav-item">
 						<a class="nav-link" @click="toTransaction"><strong>收支</strong></a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" @click="toUser"><strong>用户</strong></a>
+					<li class="nav-item" style="display:none" id="isAdmin">
+						<a class="nav-link" @click="toUser" v-if="isAdmin"><strong>用户</strong></a>
 					</li>
 				</ul>
 			</div>
@@ -159,7 +159,7 @@
 	<!-- 新增模态框 -->
 	<div class="modal fade" id="addDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
-			<div class="modal-content">
+			<div class="modal-content" style="margin-top: 170px">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">新增养殖详情</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -174,7 +174,7 @@
 								<label for="addBatchNum" class="col-form-label">批次:</label>
 							</td>
 							<td>
-								<input type="text" class="form-control" id="addBatchNum" v-model="addBatchNum">
+								<input type="text" class="form-control" id="addBatchNum" v-model="addData.batchNum">
 							</td>
 						</tr>
 						<tr>
@@ -182,7 +182,7 @@
 								<label for="addFeedingFrequency" class="col-form-label">饲养频率:</label>
 							</td>
 							<td>
-								<input type="text" class="form-control" id="addFeedingFrequency" v-model="addFeedingFrequency">
+								<input type="text" class="form-control" id="addFeedingFrequency" v-model="addData.feedingFrequency">
 							</td>
 						</tr>
 						<tr>
@@ -190,7 +190,7 @@
 								<label for="addFodderType" class="col-form-label">饲料类型:</label>
 							</td>
 							<td>
-								<input type="text" class="form-control" id="addFodderType" v-model="addFodderType">
+								<input type="text" class="form-control" id="addFodderType" v-model="addData.fodderType">
 							</td>
 						</tr>
 						<tr>
@@ -198,7 +198,7 @@
 								<label for="addResponsiblePersonName" class="col-form-label">负责人名称:</label>
 							</td>
 							<td>
-								<input type="text" class="form-control" id="addResponsiblePersonName" v-model="addResponsiblePersonName">
+								<input type="text" class="form-control" id="addResponsiblePersonName" v-model="addData.responsiblePersonName">
 							</td>
 						</tr>
 						</tbody>
@@ -215,7 +215,7 @@
 	<!-- 修改模态框 -->
 	<div class="modal fade" id="editDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
-			<div class="modal-content">
+			<div class="modal-content" style="margin-top: 80px">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel2">修改养殖详情</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -230,7 +230,23 @@
 								<label for="detailBatchNum" class="col-form-label">批次:</label>
 							</td>
 							<td>
-								<input type="text" class="form-control" id="detailBatchNum" v-model="detailBatchNum" disabled="disabled">
+								<input type="text" class="form-control" id="detailBatchNum" v-model="detailData.batchNum" disabled="disabled">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="detailVariety" class="col-form-label">品种:</label>
+							</td>
+							<td>
+								<input type="text" class="form-control" id="detailVariety" v-model="detailData.variety" disabled="disabled">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="detailSource" class="col-form-label">来源:</label>
+							</td>
+							<td>
+								<input type="text" class="form-control" id="detailSource" v-model="detailData.source" disabled="disabled">
 							</td>
 						</tr>
 						<tr>
@@ -238,7 +254,7 @@
 								<label for="detailFeedingFrequency" class="col-form-label">饲养频率:</label>
 							</td>
 							<td>
-								<input type="text" class="form-control" id="detailFeedingFrequency" v-model="detailFeedingFrequency">
+								<input type="text" class="form-control" id="detailFeedingFrequency" v-model="detailData.feedingFrequency">
 							</td>
 						</tr>
 						<tr>
@@ -246,7 +262,7 @@
 								<label for="detailFodderType" class="col-form-label">饲料类型:</label>
 							</td>
 							<td>
-								<input type="text" class="form-control" id="detailFodderType" v-model="detailFodderType">
+								<input type="text" class="form-control" id="detailFodderType" v-model="detailData.fodderType">
 							</td>
 						</tr>
 						<tr>
@@ -254,7 +270,7 @@
 								<label for="detailResponsiblePersonName" class="col-form-label">负责人名称:</label>
 							</td>
 							<td>
-								<input type="text" class="form-control" id="detailResponsiblePersonName" v-model="detailResponsiblePersonName" disabled="disabled">
+								<input type="text" class="form-control" id="detailResponsiblePersonName" v-model="detailData.responsiblePersonName" disabled="disabled">
 							</td>
 						</tr>
 						</tbody>
@@ -271,7 +287,7 @@
 	<!-- 删除模态框 -->
 	<div class="modal fade" id="deleteDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
-			<div class="modal-content">
+			<div class="modal-content" style="margin-top: 100px">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel3">删除养殖详情</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -353,41 +369,37 @@
 	const mainApp = new Vue({
 		el: '#mainApp',
 		data: {
-			variety : '',
-			source : '',
-			isVaccine : true,
+			listData : {
+				pageNum : 1,
+				pageSize : 5
+			},
 			list : [{
 				id : '',
 				detailId : '',
 				batchNum : 0,
 				variety : '',
 				source : '',
-				feedingFrequency : '',
-				fodderType : '',
-				responsiblePersonId : '',
+				vaccineName : '',
+				vaccineType : '',
+				vaccinePrice : '',
+				injectTime : '',
 				responsiblePersonName : ''
 			}],
+			deleteId : '',
 			total : 0,
-			pageList : [],
-			pageNum : 1
+			pageList : []
 		},
 		methods: {
 			toList(page) {
 				if(page === undefined){
-					this.pageNum = 1;
+					this.listData.pageNum = 1;
 				}else {
-					this.pageNum = page;
+					this.listData.pageNum = page;
 				}
 				axios({
 					method: 'get',
-					url: '/feeding/list',
-					params: {
-						variety: this.variety,
-						source: this.source,
-						isVaccine: this.isVaccine,
-						pageSize: 10,
-						pageNum: this.pageNum
-					}
+					url: '/vaccine/list',
+					params: this.listData
 				})
 				.then(this.listInit)
 				.catch(function (error) {
@@ -406,16 +418,11 @@
 					alert("系统异常: " + response.data.msg);
 				}
 			},
-			toAdd(batchNum,feedingFrequency,fodderType,responsiblePersonName){
+			toAdd(addData){
 				axios({
 					method: 'post',
-					url: '/feeding/add',
-					data: {
-						batchNum: batchNum,
-						feedingFrequency: feedingFrequency,
-						fodderType: fodderType,
-						responsiblePersonName: responsiblePersonName
-					}
+					url: '/vaccine/add',
+					data: addData
 				})
 				.then(this.addInit)
 				.catch(function (error) {
@@ -427,10 +434,14 @@
 					document.getElementById("addDetail").click();
 					this.toList();
 					alert("新增成功");
-					modalApp.addBatchNum = '';
-					modalApp.addFeedingFrequency = '';
-					modalApp.addFodderType = '';
-					modalApp.addResponsiblePersonName = '';
+					modalApp.addData = {
+						addBatchNum : '',
+						vaccineName : '',
+						vaccineType : '',
+						vaccinePrice : '',
+						injectTime : '',
+						addResponsiblePersonName : ''
+					};
 				}else {
 					alert("系统异常: " + response.data.msg);
 				}
@@ -442,7 +453,7 @@
 				if(id === undefined){
 					axios({
 						method: 'delete',
-						url: '/feeding/delete',
+						url: '/vaccine/delete',
 						data: {
 							id: this.detailId
 						}
@@ -473,29 +484,34 @@
 	const modalApp = new Vue({
 		el: '#modalApp',
 		data: {
-			addBatchNum : '',
-			addFeedingFrequency : '',
-			addFodderType : '',
-			addResponsiblePersonName : '',
-			detailId : '',
-			detailDetailId : '',
-			detailBatchNum : 0,
-			detailVariety : '',
-			detailSource : '',
-			detailFeedingFrequency : '',
-			detailFodderType : '',
-			detailResponsiblePersonId : '',
-			detailResponsiblePersonName : '',
-			deleteId : ''
+			addData : {
+				addBatchNum : '',
+				vaccineName : '',
+				vaccineType : '',
+				vaccinePrice : '',
+				injectTime : '',
+				addResponsiblePersonName : ''
+			},
+			detailData : {
+				id : '',
+				detailId : '',
+				batchNum : 0,
+				variety : '',
+				source : '',
+				feedingFrequency : '',
+				fodderType : '',
+				responsiblePersonId : '',
+				responsiblePersonName : ''
+			}
 		},
 		methods : {
 			toAdd(){
-				mainApp.toAdd(this.addBatchNum,this.addFeedingFrequency,this.addFodderType,this.addResponsiblePersonName)
+				mainApp.toAdd(this.addData)
 			},
 			toDetail(id){
 				axios({
 					method: 'get',
-					url: '/feeding/detail',
+					url: '/vaccine/detail',
 					params: {
 						id: id
 					}
@@ -507,16 +523,7 @@
 			},
 			detailInit(response){
 				if(response.data.code === 200 ){
-					console.log(response.data.row)
-					this.detailId = response.data.row.id;
-					this.detailDetailId = response.data.row.detailId;
-					this.detailBatchNum = response.data.row.batchNum;
-					this.detailVariety = response.data.row.variety;
-					this.detailSource = response.data.row.source;
-					this.detailFeedingFrequency = response.data.row.feedingFrequency;
-					this.detailFodderType = response.data.row.fodderType;
-					this.detailResponsiblePersonId = response.data.row.responsiblePersonId;
-					this.detailResponsiblePersonName = response.data.row.responsiblePersonName;
+					this.detailData = response.data.row;
 				}else {
 					alert("系统异常: " + response.data.msg);
 				}
@@ -524,12 +531,8 @@
 			toEdit(){
 				axios({
 					method: 'put',
-					url: '/feeding/edit',
-					data: {
-						id : this.detailId,
-						feedingFrequency : this.detailFeedingFrequency,
-						fodderType : this.detailFodderType
-					}
+					url: '/vaccine/edit',
+					data: this.detailData
 				})
 				.then(this.editInit)
 				.catch(function (error) {
@@ -538,16 +541,18 @@
 			},
 			editInit(response){
 				if(response.data.code === 200 ){
-					this.detailId = '';
-					this.detailDetailId = '';
-					this.detailBatchNum = 0;
-					this.detailVariety = '';
-					this.detailSource = '';
-					this.detailFeedingFrequency ='';
-					this.detailFodderType = '';
-					this.detailResponsiblePersonId = '';
-					this.detailResponsiblePersonName = '';
-					this.toList();
+					this.detailData = {
+						id : '',
+						detailId : '',
+						batchNum : 0,
+						variety : '',
+						source : '',
+						feedingFrequency : '',
+						fodderType : '',
+						responsiblePersonId : '',
+						responsiblePersonName : ''
+					};
+					mainApp.toList();
 					document.getElementById("editDetail").click();
 					alert("修改成功");
 				}else {
@@ -563,6 +568,9 @@
 
 	const navApp = new Vue({
 		el: "#navApp",
+		data : {
+			isAdmin : false
+		},
 		methods: {
 			toIndex(){
 				window.location.href = 'http://localhost:8801/page/index';
@@ -578,6 +586,18 @@
 			},
 			toUser(){
 				window.location.href = 'http://localhost:8801/page/user';
+			}
+		},
+		created: function () {
+			const strcookie = document.cookie;
+			const arrcookie = strcookie.split("; ");
+			//遍历匹配
+			for ( var i = 0; i < arrcookie.length; i++) {
+				var arr = arrcookie[i].split("=");
+				if (arr[0] == 'isAdmin'){
+					this.isAdmin = JSON.parse(arr[1]);
+					$("#isAdmin").toggle();
+				}
 			}
 		}
 	});

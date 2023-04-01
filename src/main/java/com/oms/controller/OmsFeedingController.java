@@ -28,8 +28,8 @@ public class OmsFeedingController {
      * @return TableInfo
      */
     @GetMapping("/list")
-    public TableInfo<FeedingListVo> toList(){
-        return Build.buildTable(feedingService.toList());
+    public TableInfo<FeedingListVo> toList(@Valid FeedingListDto dto){
+        return feedingService.toList(dto);
     }
 
     /**

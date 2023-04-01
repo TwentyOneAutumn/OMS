@@ -4,12 +4,13 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.oms.domain.AjaxResult;
-import com.oms.domain.Build;
-import com.oms.domain.OmsUser;
-import com.oms.domain.Row;
-import com.oms.domain.dto.LoginCheckDto;
-import com.oms.domain.dto.TokenCheckDto;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.oms.domain.*;
+import com.oms.domain.dto.*;
+import com.oms.domain.vo.FeedingDetailVo;
+import com.oms.domain.vo.UserDetailVo;
+import com.oms.domain.vo.UserListVo;
 import com.oms.mapper.OmsUserMapper;
 import com.oms.service.IOmsUserService;
 import com.oms.utils.CookieUtils;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class OmsUserServiceImpl extends ServiceImpl<OmsUserMapper, OmsUser> implements IOmsUserService {
@@ -33,14 +35,15 @@ public class OmsUserServiceImpl extends ServiceImpl<OmsUserMapper, OmsUser> impl
      */
     @Override
     public Row<String> toLoginCheck(LoginCheckDto dto, HttpServletResponse response) {
-        int count = count(new LambdaQueryWrapper<OmsUser>()
+        OmsUser user = getOne(new LambdaQueryWrapper<OmsUser>()
                 .eq(OmsUser::getUserAccount, dto.getAccount())
                 .eq(OmsUser::getPassword, dto.getPassword())
         );
-        if(count == 1){
+        if(BeanUtil.isNotEmpty(user)){
             String token = JwtUtil.getToken(dto.getAccount(), dto.getPassword());
             response.setHeader("token",token);
             response.setHeader("account",dto.getAccount());
+            response.setHeader("isAdmin",String.valueOf("admin".equals(user.getUserName())));
             return Build.buildRow(token);
         }else {
             return Build.buildRow(false);
@@ -70,6 +73,7 @@ public class OmsUserServiceImpl extends ServiceImpl<OmsUserMapper, OmsUser> impl
                 HashMap<String, String> map = new HashMap<>();
                 map.put("token",token);
                 map.put("account",account);
+                map.put("isAdmin",String.valueOf("admin".equals(user.getUserName())));
                 CookieUtils.set(response,map);
                 return true;
             }else {
@@ -77,5 +81,57 @@ public class OmsUserServiceImpl extends ServiceImpl<OmsUserMapper, OmsUser> impl
             }
         }
         return false;
+    }
+
+    @Override
+    public TableInfo<UserListVo> toList(UserListDto dto) {
+        Page<Object> page = PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
+        List<OmsUser> list = list(new LambdaQueryWrapper<OmsUser>()
+                .eq(OmsUser::getRole, false)
+        );
+        return Build.buildTable(page.getPages(),BeanUtil.copyToList(list,UserListVo.class));
+    }
+
+    @Override
+    public Row<UserDetailVo> toDetail(UserDetailDto dto) {
+        OmsUser pojo = getById(dto.getId());
+        if(BeanUtil.isEmpty(pojo)){
+            return Build.buildRow(false,"数据不存在");
+        }
+        UserDetailVo vo = BeanUtil.copyProperties(pojo, UserDetailVo.class);
+        return Row.success(vo);
+    }
+
+    @Override
+    public AjaxResult toAdd(UserAddDto dto) {
+        OmsUser pojo = BeanUtil.toBean(dto, OmsUser.class);
+        int count = count(new LambdaQueryWrapper<OmsUser>()
+                .eq(OmsUser::getUserAccount, dto.getUserAccount())
+                .or()
+                .eq(OmsUser::getUserName, dto.getUserName())
+        );
+        if(count > 0){
+            return AjaxResult.error("用户名或账号已存在");
+        }
+        pojo.setRole(false);
+        return save(pojo) ? AjaxResult.success() : AjaxResult.error();
+    }
+
+    @Override
+    public AjaxResult toEdit(UserEditDto dto) {
+        if(BeanUtil.isEmpty(getById(dto.getId()))){
+            return AjaxResult.error("数据不存在");
+        }
+        OmsUser pojo = BeanUtil.toBean(dto, OmsUser.class);
+        return updateById(pojo) ? AjaxResult.success() : AjaxResult.error();
+    }
+
+    @Override
+    public AjaxResult toDelete(UserDeleteDto dto) {
+        String id = dto.getId();
+        if(BeanUtil.isEmpty(getById(id))){
+            return AjaxResult.error("数据不存在");
+        }
+        return removeById(id) ? AjaxResult.success() : AjaxResult.error();
     }
 }

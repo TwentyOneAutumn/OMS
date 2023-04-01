@@ -16,7 +16,6 @@ import java.io.Serializable;
 @KeySequence("UUIDKeyGenerator")
 @EqualsAndHashCode(callSuper = true)
 public class OmsUser extends BaseEntitys implements Serializable {
-//    private static final long serialVersionUID = 1L;
 
     /**
      * 主键ID
@@ -42,7 +41,7 @@ public class OmsUser extends BaseEntitys implements Serializable {
     /**
      * 角色
      */
-    private String role;
+    private Boolean role;
 }
 
 

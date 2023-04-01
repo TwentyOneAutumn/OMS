@@ -26,7 +26,7 @@
         <Jakarta.version>2.0.1</Jakarta.version>
         <FastJson.version>2.0.1</FastJson.version>
         <MybatisPlus.version>3.4.2</MybatisPlus.version>
-        <Validation.version>2.0.2</Validation.version>
+        <Validation.version>3.0.2</Validation.version>
         <ApacheCommons.version>1.15</ApacheCommons.version>
         <Slf4j.version>1.7.30</Slf4j.version>
         <Log4j2.version>2.19.0</Log4j2.version>
@@ -100,6 +100,18 @@
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
             <version>${Validation.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>8.0.0.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.1.Final</version>
         </dependency>
 
         <!-- Apache Commons -->

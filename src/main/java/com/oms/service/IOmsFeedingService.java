@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.oms.domain.AjaxResult;
 import com.oms.domain.OmsFeeding;
 import com.oms.domain.Row;
+import com.oms.domain.TableInfo;
 import com.oms.domain.dto.*;
 import com.oms.domain.vo.*;
 
@@ -19,7 +20,7 @@ public interface IOmsFeedingService extends IService<OmsFeeding> {
      *
      * @return TableInfo
      */
-    List<FeedingListVo> toList();
+    TableInfo<FeedingListVo> toList(FeedingListDto dto);
 
     /**
      * 明细

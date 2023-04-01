@@ -39,7 +39,7 @@ public class OmsTransactionController {
      * @return AjaxResult
      */
     @GetMapping("/detail")
-    public Row<TransactionDetailVo> toDetail(@Valid @RequestBody TransactionDetailDto dto){
+    public Row<TransactionDetailVo> toDetail(@Valid TransactionDetailDto dto){
         return TransactionService.toDetail(dto);
     }
 
@@ -49,21 +49,9 @@ public class OmsTransactionController {
      * @param dto 数据对象
      * @return AjaxResult
      */
-    @GetMapping("/add")
+    @PostMapping("/add")
     public AjaxResult toAdd(@Valid @RequestBody TransactionAddDto dto){
         return TransactionService.toAdd(dto);
-    }
-
-
-    /**
-     * 修改
-     *
-     * @param dto 数据对象
-     * @return AjaxResult
-     */
-    @GetMapping("/edit")
-    public AjaxResult toEdit(@Valid @RequestBody TransactionEditDto dto){
-        return TransactionService.toEdit(dto);
     }
 
     /**
@@ -76,5 +64,4 @@ public class OmsTransactionController {
     public AjaxResult toDelete(@Valid @RequestBody TransactionDeleteDto dto){
         return TransactionService.toDelete(dto);
     }
-
 }

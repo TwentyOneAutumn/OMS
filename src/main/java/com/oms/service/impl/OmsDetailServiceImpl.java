@@ -55,7 +55,7 @@ public class OmsDetailServiceImpl extends ServiceImpl<OmsDetailMapper, OmsDetail
             wrapper.like(OmsDetail::getVariety,variety);
         }
         if(StrUtil.isNotEmpty(source)){
-            wrapper.like(OmsDetail::getVariety,source);
+            wrapper.like(OmsDetail::getSource,source);
         }
         List<OmsDetail> list = list(wrapper);
         List<DetailListVo> voList = BeanUtil.copyToList(list, DetailListVo.class);
@@ -110,7 +110,7 @@ public class OmsDetailServiceImpl extends ServiceImpl<OmsDetailMapper, OmsDetail
     @Override
     public AjaxResult toEdit(DetailEditDto dto) {
         if(BeanUtil.isEmpty(getById(dto.getId()))){
-            throw new RuntimeException("数据不存在");
+            return AjaxResult.error("数据不存在");
         }
         OmsDetail pojo = BeanUtil.toBean(dto, OmsDetail.class);
         return updateById(pojo) ? AjaxResult.success() : AjaxResult.error();
@@ -126,7 +126,7 @@ public class OmsDetailServiceImpl extends ServiceImpl<OmsDetailMapper, OmsDetail
     public AjaxResult toDelete(DetailDeleteDto dto) {
         String id = dto.getId();
         if(BeanUtil.isEmpty(getById(id))){
-            throw new RuntimeException("数据不存在");
+            return AjaxResult.error("数据不存在");
         }
         if(removeById(id)){
             feedingService.remove(new LambdaQueryWrapper<OmsFeeding>()
