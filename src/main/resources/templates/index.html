@@ -105,6 +105,7 @@
 					</td>
 					<td>
 						<button type="button" class="btn btn-success btn-round" @click="toList(undefined)">查询</button>
+						<button type="button" class="btn btn-success btn-round" @click="toClear">重置</button>
 						<button type="button" class="btn btn-success btn-round" data-toggle="modal" data-target="#addDetail">新增</button>
 					</td>
 				</tr>
@@ -206,7 +207,7 @@
 								<label for="variety" class="col-form-label">品种:</label>
 							</td>
 							<td>
-								<input type="text" class="form-control" id="variety" v-model="addData.vriety">
+								<input type="text" class="form-control" id="variety" v-model="addData.variety">
 							</td>
 						</tr>
 						<tr>
@@ -400,6 +401,16 @@
 			pageNum: 1
 		},
 		methods: {
+			toClear(){
+				this.listData = {
+					variety: '',
+					source: '',
+					isVaccine: true,
+					pageSize: 5,
+					pageNum: 1
+				}
+				this.toList();
+			},
 			toList(page) {
 				if(page === undefined){
 					this.listData.pageNum = 1;
@@ -436,7 +447,7 @@
 					variety: '',
 					source: '',
 					isVaccine: true,
-					pageSize: 10,
+					pageSize: 5,
 					pageNum: 1
 				}
 			},

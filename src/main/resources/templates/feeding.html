@@ -398,7 +398,7 @@
 				}
 				axios({
 					method: 'get',
-					url: '/vaccine/list',
+					url: '/feeding/list',
 					params: this.listData
 				})
 				.then(this.listInit)
@@ -421,7 +421,7 @@
 			toAdd(addData){
 				axios({
 					method: 'post',
-					url: '/vaccine/add',
+					url: '/feeding/add',
 					data: addData
 				})
 				.then(this.addInit)
@@ -453,7 +453,7 @@
 				if(id === undefined){
 					axios({
 						method: 'delete',
-						url: '/vaccine/delete',
+						url: '/feeding/delete',
 						data: {
 							id: this.detailId
 						}
@@ -485,12 +485,10 @@
 		el: '#modalApp',
 		data: {
 			addData : {
-				addBatchNum : '',
-				vaccineName : '',
-				vaccineType : '',
-				vaccinePrice : '',
-				injectTime : '',
-				addResponsiblePersonName : ''
+				batchNum : '',
+				feedingFrequency : '',
+				fodderType : '',
+				responsiblePersonName : ''
 			},
 			detailData : {
 				id : '',
@@ -511,7 +509,7 @@
 			toDetail(id){
 				axios({
 					method: 'get',
-					url: '/vaccine/detail',
+					url: '/feeding/detail',
 					params: {
 						id: id
 					}
@@ -531,7 +529,7 @@
 			toEdit(){
 				axios({
 					method: 'put',
-					url: '/vaccine/edit',
+					url: '/feeding/edit',
 					data: this.detailData
 				})
 				.then(this.editInit)

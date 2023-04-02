@@ -1,6 +1,7 @@
 package com.oms.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -19,6 +20,7 @@ import com.oms.utils.StreamUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -47,6 +49,15 @@ public class OmsDetailServiceImpl extends ServiceImpl<OmsDetailMapper, OmsDetail
      */
     @Override
     public TableInfo<DetailListVo> toList(DetailListDto dto) {
+        if(BeanUtil.isEmpty(dto.getIsVaccine())){
+            return Build.buildTable("是否接种疫苗不能为空");
+        }
+        if(BeanUtil.isEmpty(dto.getPageSize())){
+            return Build.buildTable("pageSize参数不能为空");
+        }
+        if(BeanUtil.isEmpty(dto.getPageNum())){
+            return Build.buildTable("pageNum参数不能为空");
+        }
         Page<Object> page = PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         LambdaQueryWrapper<OmsDetail> wrapper = new LambdaQueryWrapper<>();
         String variety = dto.getVariety();
@@ -58,6 +69,11 @@ public class OmsDetailServiceImpl extends ServiceImpl<OmsDetailMapper, OmsDetail
             wrapper.like(OmsDetail::getSource,source);
         }
         List<OmsDetail> list = list(wrapper);
+        if(dto.getIsVaccine()){
+            list = StreamUtils.filterToList(list,detail -> vaccineService.count(new LambdaQueryWrapper<OmsVaccine>().eq(OmsVaccine::getDetailId,detail.getId())) > 0);
+        }else {
+            list = StreamUtils.filterToList(list,detail -> vaccineService.count(new LambdaQueryWrapper<OmsVaccine>().eq(OmsVaccine::getDetailId,detail.getId())) == 0);
+        }
         List<DetailListVo> voList = BeanUtil.copyToList(list, DetailListVo.class);
         voList.forEach(vo -> {
             // 处理购买价格
@@ -79,6 +95,9 @@ public class OmsDetailServiceImpl extends ServiceImpl<OmsDetailMapper, OmsDetail
      */
     @Override
     public Row<DetailDetailVo> toDetail(DetailDetailDto dto) {
+        if(StrUtil.isEmpty(dto.getId())){
+            return Build.buildRow(false,"id参数不能为空");
+        }
         OmsDetail pojo = getById(dto.getId());
         if(BeanUtil.isEmpty(pojo)){
             return Build.buildRow(false,"数据不存在");
@@ -94,10 +113,21 @@ public class OmsDetailServiceImpl extends ServiceImpl<OmsDetailMapper, OmsDetail
      */
     @Override
     public AjaxResult toAdd(DetailAddDto dto) {
+        if(StrUtil.isEmpty(dto.getVariety())){
+            return AjaxResult.error("品种不能为空");
+        }
+        if(StrUtil.isEmpty(dto.getSource())){
+            return AjaxResult.error("来源不能为空");
+        }
         OmsDetail pojo = BeanUtil.toBean(dto, OmsDetail.class);
         pojo.setStartTime(LocalDate.now());
-        Integer batchNum = StreamUtils.max(list(), Comparator.comparing(OmsDetail::getBatchNum)).getBatchNum();
-        pojo.setBatchNum(BeanUtil.isNotEmpty(batchNum) ? batchNum + 1 : 1);
+        List<OmsDetail> list = list();
+        if(CollUtil.isNotEmpty(list)){
+            Integer batchNum = StreamUtils.max(list, Comparator.comparing(OmsDetail::getBatchNum)).getBatchNum();
+            pojo.setBatchNum(BeanUtil.isNotEmpty(batchNum) ? batchNum + 1 : 1);
+        }else {
+            pojo.setBatchNum(1);
+        }
         return save(pojo) ? AjaxResult.success() : AjaxResult.error();
     }
 
@@ -109,6 +139,15 @@ public class OmsDetailServiceImpl extends ServiceImpl<OmsDetailMapper, OmsDetail
      */
     @Override
     public AjaxResult toEdit(DetailEditDto dto) {
+        if(StrUtil.isEmpty(dto.getId())){
+            return AjaxResult.error("id参数不能为空");
+        }
+        if(StrUtil.isEmpty(dto.getVariety())){
+            return AjaxResult.error("品种不能为空");
+        }
+        if(StrUtil.isEmpty(dto.getSource())){
+            return AjaxResult.error("来源不能为空");
+        }
         if(BeanUtil.isEmpty(getById(dto.getId()))){
             return AjaxResult.error("数据不存在");
         }
@@ -124,6 +163,9 @@ public class OmsDetailServiceImpl extends ServiceImpl<OmsDetailMapper, OmsDetail
      */
     @Override
     public AjaxResult toDelete(DetailDeleteDto dto) {
+        if(StrUtil.isEmpty(dto.getId())){
+            return AjaxResult.error("id参数不能为空");
+        }
         String id = dto.getId();
         if(BeanUtil.isEmpty(getById(id))){
             return AjaxResult.error("数据不存在");

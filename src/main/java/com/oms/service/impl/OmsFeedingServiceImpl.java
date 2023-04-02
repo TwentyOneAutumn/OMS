@@ -36,6 +36,12 @@ public class OmsFeedingServiceImpl extends ServiceImpl<OmsFeedingMapper, OmsFeed
      */
     @Override
     public TableInfo<FeedingListVo> toList(FeedingListDto dto) {
+        if(BeanUtil.isEmpty(dto.getPageSize())){
+            return Build.buildTable("pageSize参数不能为空");
+        }
+        if(BeanUtil.isEmpty(dto.getPageNum())){
+            return Build.buildTable("pageNum参数不能为空");
+        }
         Page<Object> page = PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         List<FeedingListVo> voList = BeanUtil.copyToList(list(), FeedingListVo.class);
         voList.forEach(vo -> {
@@ -57,6 +63,9 @@ public class OmsFeedingServiceImpl extends ServiceImpl<OmsFeedingMapper, OmsFeed
      */
     @Override
     public Row<FeedingDetailVo> toDetail(FeedingDetailDto dto) {
+        if(StrUtil.isEmpty(dto.getId())){
+            return Build.buildRow(false,"id参数不能为空");
+        }
         OmsFeeding pojo = getById(dto.getId());
         if(BeanUtil.isEmpty(pojo)){
             return Build.buildRow(false,"数据不存在");
@@ -77,17 +86,23 @@ public class OmsFeedingServiceImpl extends ServiceImpl<OmsFeedingMapper, OmsFeed
      */
     @Override
     public AjaxResult toAdd(FeedingAddDto dto) {
-        OmsUser user = userService.getOne(new LambdaQueryWrapper<OmsUser>()
-                .eq(OmsUser::getUserName, dto.getResponsiblePersonName())
-        );
-        if(BeanUtil.isEmpty(user)){
-            return AjaxResult.error("该用户不存在");
-        }
         OmsDetail detail = detailService.getOne(new LambdaQueryWrapper<OmsDetail>()
                 .eq(OmsDetail::getBatchNum, dto.getBatchNum())
         );
         if(BeanUtil.isEmpty(detail)){
             return AjaxResult.error("该批次不存在");
+        }
+        if(StrUtil.isEmpty(dto.getFeedingFrequency())){
+            return AjaxResult.error("饲养频率不能为空");
+        }
+        if(StrUtil.isEmpty(dto.getFodderType())){
+            return AjaxResult.error("饲料类型不能为空");
+        }
+        OmsUser user = userService.getOne(new LambdaQueryWrapper<OmsUser>()
+                .eq(OmsUser::getUserName, dto.getResponsiblePersonName())
+        );
+        if(BeanUtil.isEmpty(user)){
+            return AjaxResult.error("该用户不存在");
         }
         OmsFeeding pojo = BeanUtil.toBean(dto, OmsFeeding.class);
         pojo.setDetailId(detail.getId());
@@ -104,6 +119,15 @@ public class OmsFeedingServiceImpl extends ServiceImpl<OmsFeedingMapper, OmsFeed
      */
     @Override
     public AjaxResult toEdit(FeedingEditDto dto) {
+        if(StrUtil.isEmpty(dto.getId())){
+            return AjaxResult.error("id参数不能为空");
+        }
+        if(StrUtil.isEmpty(dto.getFeedingFrequency())){
+            return AjaxResult.error("饲养频率不能为空");
+        }
+        if(StrUtil.isEmpty(dto.getFodderType())){
+            return AjaxResult.error("饲料类型不能为空");
+        }
         if(BeanUtil.isEmpty(getById(dto.getId()))){
             return AjaxResult.error("数据不存在");
         }
@@ -119,6 +143,9 @@ public class OmsFeedingServiceImpl extends ServiceImpl<OmsFeedingMapper, OmsFeed
      */
     @Override
     public AjaxResult toDelete(FeedingDeleteDto dto) {
+        if(StrUtil.isEmpty(dto.getId())){
+            return AjaxResult.error("id参数不能为空");
+        }
         String id = dto.getId();
         if(BeanUtil.isEmpty(getById(id))){
             return AjaxResult.error("数据不存在");

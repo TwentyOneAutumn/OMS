@@ -85,6 +85,12 @@ public class OmsUserServiceImpl extends ServiceImpl<OmsUserMapper, OmsUser> impl
 
     @Override
     public TableInfo<UserListVo> toList(UserListDto dto) {
+        if(BeanUtil.isEmpty(dto.getPageSize())){
+            return Build.buildTable("pageSize参数不能为空");
+        }
+        if(BeanUtil.isEmpty(dto.getPageNum())){
+            return Build.buildTable("pageNum参数不能为空");
+        }
         Page<Object> page = PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         List<OmsUser> list = list(new LambdaQueryWrapper<OmsUser>()
                 .eq(OmsUser::getRole, false)
@@ -94,6 +100,9 @@ public class OmsUserServiceImpl extends ServiceImpl<OmsUserMapper, OmsUser> impl
 
     @Override
     public Row<UserDetailVo> toDetail(UserDetailDto dto) {
+        if(StrUtil.isEmpty(dto.getId())){
+            return Build.buildRow(false,"id参数不能为空");
+        }
         OmsUser pojo = getById(dto.getId());
         if(BeanUtil.isEmpty(pojo)){
             return Build.buildRow(false,"数据不存在");
@@ -104,6 +113,15 @@ public class OmsUserServiceImpl extends ServiceImpl<OmsUserMapper, OmsUser> impl
 
     @Override
     public AjaxResult toAdd(UserAddDto dto) {
+        if(StrUtil.isEmpty(dto.getUserName())){
+            return AjaxResult.error("用户名不能为空");
+        }
+        if(StrUtil.isEmpty(dto.getUserAccount())){
+            return AjaxResult.error("账号不能为空");
+        }
+        if(StrUtil.isEmpty(dto.getPassword())){
+            return AjaxResult.error("密码不能为空");
+        }
         OmsUser pojo = BeanUtil.toBean(dto, OmsUser.class);
         int count = count(new LambdaQueryWrapper<OmsUser>()
                 .eq(OmsUser::getUserAccount, dto.getUserAccount())
@@ -119,6 +137,12 @@ public class OmsUserServiceImpl extends ServiceImpl<OmsUserMapper, OmsUser> impl
 
     @Override
     public AjaxResult toEdit(UserEditDto dto) {
+        if(StrUtil.isEmpty(dto.getId())){
+            return AjaxResult.error("id参数不能为空");
+        }
+        if(StrUtil.isEmpty(dto.getPassword())){
+            return AjaxResult.error("密码不能为空");
+        }
         if(BeanUtil.isEmpty(getById(dto.getId()))){
             return AjaxResult.error("数据不存在");
         }
@@ -128,6 +152,9 @@ public class OmsUserServiceImpl extends ServiceImpl<OmsUserMapper, OmsUser> impl
 
     @Override
     public AjaxResult toDelete(UserDeleteDto dto) {
+        if(StrUtil.isEmpty(dto.getId())){
+            return AjaxResult.error("id参数不能为空");
+        }
         String id = dto.getId();
         if(BeanUtil.isEmpty(getById(id))){
             return AjaxResult.error("数据不存在");

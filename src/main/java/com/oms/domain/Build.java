@@ -23,6 +23,16 @@ public class Build {
         return new TableInfo<T>(total,collection);
     }
 
+
+    /**
+     * 构建TableInfo
+     * @param msg 错误信息
+     * @return TableInfo
+     */
+    public static  <T> TableInfo<T> buildTable(String msg){
+        return new TableInfo<T>(0,HttpStatus.ERROR,msg,null);
+    }
+
     /**
      * 构建Row
      * @param row 数据

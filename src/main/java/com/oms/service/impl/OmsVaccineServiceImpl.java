@@ -1,6 +1,7 @@
 package com.oms.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
@@ -37,6 +38,12 @@ public class OmsVaccineServiceImpl extends ServiceImpl<OmsVaccineMapper, OmsVacc
      */
     @Override
     public TableInfo<VaccineListVo> toList(VaccineListDto dto) {
+        if(BeanUtil.isEmpty(dto.getPageSize())){
+            return Build.buildTable("pageSize参数不能为空");
+        }
+        if(BeanUtil.isEmpty(dto.getPageNum())){
+            return Build.buildTable("pageNum参数不能为空");
+        }
         Page<Object> page = PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         List<VaccineListVo> voList = BeanUtil.copyToList(list(), VaccineListVo.class);
         voList.forEach(vo -> {
@@ -58,6 +65,9 @@ public class OmsVaccineServiceImpl extends ServiceImpl<OmsVaccineMapper, OmsVacc
      */
     @Override
     public Row<VaccineDetailVo> toDetail(VaccineDetailDto dto) {
+        if(StrUtil.isEmpty(dto.getId())){
+            return Build.buildRow(false,"id参数不能为空");
+        }
         OmsVaccine pojo = getById(dto.getId());
         if(BeanUtil.isEmpty(pojo)){
             return Build.buildRow(false,"数据不存在");
@@ -78,17 +88,29 @@ public class OmsVaccineServiceImpl extends ServiceImpl<OmsVaccineMapper, OmsVacc
      */
     @Override
     public AjaxResult toAdd(VaccineAddDto dto) {
-        OmsUser user = userService.getOne(new LambdaQueryWrapper<OmsUser>()
-                .eq(OmsUser::getUserName, dto.getResponsiblePersonName())
-        );
-        if(BeanUtil.isEmpty(user)){
-            return AjaxResult.error("该用户不存在");
-        }
         OmsDetail detail = detailService.getOne(new LambdaQueryWrapper<OmsDetail>()
                 .eq(OmsDetail::getBatchNum, dto.getBatchNum())
         );
         if(BeanUtil.isEmpty(detail)){
             return AjaxResult.error("该批次不存在");
+        }
+        if(StrUtil.isEmpty(dto.getVaccineName())){
+            return AjaxResult.error("疫苗名称不能为空");
+        }
+        if(StrUtil.isEmpty(dto.getVaccineType())){
+            return AjaxResult.error("疫苗类型不能为空");
+        }
+        if(BeanUtil.isEmpty(dto.getVaccinePrice())){
+            throw new RuntimeException("疫苗价格不能为空");
+        }
+        if(BeanUtil.isEmpty(dto.getInjectTime())){
+            throw new RuntimeException("注射时间不能为空");
+        }
+        OmsUser user = userService.getOne(new LambdaQueryWrapper<OmsUser>()
+                .eq(OmsUser::getUserName, dto.getResponsiblePersonName())
+        );
+        if(BeanUtil.isEmpty(user)){
+            return AjaxResult.error("该用户不存在");
         }
         OmsVaccine pojo = BeanUtil.toBean(dto, OmsVaccine.class);
         pojo.setDetailId(detail.getId());
@@ -105,8 +127,20 @@ public class OmsVaccineServiceImpl extends ServiceImpl<OmsVaccineMapper, OmsVacc
      */
     @Override
     public AjaxResult toEdit(VaccineEditDto dto) {
-        if(BeanUtil.isEmpty(getById(dto.getId()))){
-            throw new RuntimeException("数据不存在");
+        if(StrUtil.isEmpty(dto.getId())){
+            return AjaxResult.error("id参数不能为空");
+        }
+        if(StrUtil.isEmpty(dto.getVaccineName())){
+            return AjaxResult.error("疫苗名称不能为空");
+        }
+        if(StrUtil.isEmpty(dto.getVaccineType())){
+            return AjaxResult.error("疫苗类型不能为空");
+        }
+        if(BeanUtil.isEmpty(dto.getVaccinePrice())){
+            throw new RuntimeException("疫苗价格不能为空");
+        }
+        if(BeanUtil.isEmpty(dto.getInjectTime())){
+            throw new RuntimeException("注射时间不能为空");
         }
         OmsVaccine pojo = BeanUtil.toBean(dto, OmsVaccine.class);
         return updateById(pojo) ? AjaxResult.success() : AjaxResult.error();
@@ -120,6 +154,9 @@ public class OmsVaccineServiceImpl extends ServiceImpl<OmsVaccineMapper, OmsVacc
      */
     @Override
     public AjaxResult toDelete(VaccineDeleteDto dto) {
+        if(StrUtil.isEmpty(dto.getId())){
+            return AjaxResult.error("id参数不能为空");
+        }
         String id = dto.getId();
         if(BeanUtil.isEmpty(getById(id))){
             throw new RuntimeException("数据不存在");
